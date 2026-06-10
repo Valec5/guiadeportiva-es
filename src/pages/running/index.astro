@@ -1,0 +1,65 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../components/Layout.astro';
+
+const articles = await getCollection('articles', a => a.data.category === 'running');
+articles.sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
+---
+<Layout
+  title="Guías de Running — GuíaDeportiva.es"
+  description="Todas las guías de zapatillas running: por tipo de pisada, distancia, presupuesto y perfil de corredor. Análisis honestos y actualizados."
+>
+  <div class="cat-archive-head">
+    <div class="wrap">
+      <nav class="crumb" aria-label="Migas de pan">
+        <a href="/">Inicio</a>
+        <span class="sep">/</span>
+        <span class="cur">Running</span>
+      </nav>
+      <div style="margin-top:24px;">
+        <span class="eyebrow">{articles.length} guías</span>
+        <h1 style="font-family:var(--serif);font-weight:800;font-size:clamp(34px,5vw,56px);letter-spacing:-0.025em;line-height:1.04;margin-top:14px;">
+          Zapatillas Running
+        </h1>
+        <p style="font-size:clamp(16px,1.6vw,19px);color:var(--ink-soft);margin-top:14px;max-width:56ch;line-height:1.6;">
+          Guías de compra para cada tipo de corredor: desde el principiante que da sus primeros
+          pasos hasta el maratoniano que busca batir su marca personal.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap" style="padding-top:clamp(40px,6vw,64px);padding-bottom:clamp(56px,7vw,88px);">
+    <div class="posts-grid">
+      {articles.map(art => {
+        const readingTime = Math.ceil((art.body?.split(/\s+/).length ?? 0) / 200);
+        const dateStr = new Intl.DateTimeFormat('es-ES', { month: 'short', year: 'numeric' }).format(art.data.publishDate);
+        return (
+          <article class="post-card">
+            <a href={`/${art.slug}/`} tabindex="-1" aria-hidden="true">
+              <div class="pc-img"></div>
+            </a>
+            <div class="pc-body">
+              <span class="tag">Running</span>
+              <h2 class="post-card-title">
+                <a href={`/${art.slug}/`}>{art.data.title}</a>
+              </h2>
+              {art.data.excerpt && <p class="pc-excerpt">{art.data.excerpt}</p>}
+              <div class="pc-meta">
+                <span>{dateStr}</span>
+                <span>·</span>
+                <span>{readingTime} min</span>
+              </div>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </div>
+</Layout>
+
+<style>
+.post-card-title { font-family:var(--serif);font-weight:600;font-size:19px;letter-spacing:-0.01em;line-height:1.22;color:var(--ink); }
+.post-card-title a { color:inherit; }
+.post-card:hover .post-card-title { color:var(--orange); }
+</style>

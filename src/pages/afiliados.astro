@@ -1,0 +1,25 @@
+---
+import Layout from '../components/Layout.astro';
+const html = '<p><em>Última actualización: junio de 2026</em></p>\n<h2>Transparencia sobre los enlaces de afiliado</h2>\n<p><strong>guiadeportiva.es</strong> participa en el <strong>Programa de Afiliados de Amazon EU</strong>, gestionado por Amazon EU S.à r.l.</p>\n<p>Esto significa que algunos de los enlaces que encontrás en este sitio son enlaces de afiliado. Si hacés clic en uno de estos enlaces y realizás una compra en Amazon, recibimos una pequeña comisión sin ningún coste adicional para vos. El precio que pagás es exactamente el mismo que si hubieras accedido directamente a Amazon.</p>\n<hr />\n<h2>Cómo afecta esto a nuestros contenidos</h2>\n<p>Las comisiones de afiliado nos ayudan a mantener el sitio activo y a seguir publicando guías y comparativas gratuitas.</p>\n<p>Nos comprometemos a que la participación en programas de afiliados <strong>no influye en nuestra opinión sobre los productos</strong>. Nuestras recomendaciones se basan en investigación, análisis de especificaciones técnicas y opiniones de usuarios reales. Solo recomendamos productos que consideramos genuinamente útiles para nuestros lectores.</p>\n<hr />\n<h2>Identificación de los enlaces de afiliado</h2>\n<p>Los enlaces de afiliado en este sitio llevan a productos disponibles en <strong>Amazon.es</strong>. Podés identificarlos porque redirigen al sitio de Amazon. En muchos casos están acompañados de botones como "Ver en Amazon" o "Comprar en Amazon".</p>\n<hr />\n<h2>Otros programas de afiliados</h2>\n<p>En el futuro, este sitio podría participar en otros programas de afiliados además de Amazon. En ese caso, esta página será actualizada para reflejarlo.</p>\n<hr />\n<h2>Preguntas</h2>\n<p>Si tenés alguna pregunta sobre esta política o sobre cómo monetizamos el sitio, podés contactarnos a través del formulario de contacto.</p>\n<p>Gracias por leer y por apoyar guiadeportiva.es.</p>';
+---
+<Layout title="Divulgación de Afiliados — GuíaDeportiva.es" description="Política de divulgación de afiliados de GuíaDeportiva.es." noIndex={true}>
+  <div class="page-head">
+    <div class="wrap">
+      <nav class="crumb" aria-label="Migas de pan">
+        <a href="/">Inicio</a>
+        <span class="sep">/</span>
+        <span class="cur">Divulgación de Afiliados</span>
+      </nav>
+      <h1 style="font-family:var(--serif);font-weight:800;font-size:clamp(30px,4.5vw,50px);letter-spacing:-0.025em;line-height:1.06;margin-top:22px;">
+        Divulgación de Afiliados
+      </h1>
+    </div>
+  </div>
+  <div class="page-content">
+    <div class="wrap">
+      <div class="prose" style="max-width:720px;">
+        <Fragment set:html={html} />
+      </div>
+    </div>
+  </div>
+</Layout>

@@ -1,0 +1,37 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../components/Layout.astro';
+import Hero from '../components/Hero.astro';
+import CategoryGrid from '../components/CategoryGrid.astro';
+import ArticleGrid from '../components/ArticleGrid.astro';
+
+const allArticles = await getCollection('articles');
+allArticles.sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
+
+const latestArticles = allArticles.slice(0, 6);
+const runningCount = allArticles.filter(a => a.data.category === 'running').length;
+const comparativasCount = allArticles.filter(a => a.data.category === 'comparativas').length;
+
+const categories = [
+  {
+    slug: 'running',
+    label: 'Running',
+    description: 'Zapatillas para rodajes, entrenamientos y carreras. Por tipo de pisada, distancia y presupuesto.',
+    count: runningCount,
+  },
+  {
+    slug: 'comparativas',
+    label: 'Comparativas',
+    description: 'Cara a cara entre los modelos más vendidos: datos, pruebas reales y veredicto claro.',
+    count: comparativasCount,
+  },
+];
+---
+<Layout
+  title="GuíaDeportiva.es — Las mejores zapatillas running para cada corredor"
+  description="Guías y comparativas honestas de zapatillas running para corredores en España. Más de 800 km de pruebas reales. 100% independiente."
+>
+  <Hero postCount={allArticles.length} />
+  <CategoryGrid categories={categories} />
+  <ArticleGrid articles={latestArticles} title="Últimas guías" eyebrow="Recién publicado" />
+</Layout>

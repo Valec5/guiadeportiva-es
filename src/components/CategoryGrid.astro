@@ -1,0 +1,37 @@
+---
+interface Category {
+  slug: string;
+  label: string;
+  description: string;
+  count: number;
+}
+
+interface Props {
+  categories: Category[];
+}
+
+const { categories } = Astro.props;
+
+const icons: Record<string, string> = {
+  running: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="4" r="1.5"/><path d="m17 10-3-3-2 2-3 5H6l-2 4h4l2-4h2l2 4h4l-2-4h1l2-4z"/></svg>`,
+  comparativas: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg>`,
+};
+---
+<section class="cat-section">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Explora por categoría</span>
+      <h2>¿Qué tipo de zapatilla buscas?</h2>
+    </div>
+    <div class="cat-grid">
+      {categories.map(cat => (
+        <a href={`/${cat.slug}/`} class="cat-card">
+          <div class="cat-icon" set:html={icons[cat.slug] ?? icons.running} />
+          <h3>{cat.label}</h3>
+          <p>{cat.description}</p>
+          <div class="cat-count">{cat.count} guías</div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

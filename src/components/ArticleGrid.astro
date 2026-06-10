@@ -1,0 +1,47 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  articles: CollectionEntry<'articles'>[];
+  title?: string;
+  eyebrow?: string;
+}
+
+const { articles, title = 'Últimas guías', eyebrow = 'Para ti' } = Astro.props;
+---
+<section class="posts-section">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">{eyebrow}</span>
+      <h2>{title}</h2>
+    </div>
+    <div class="posts-grid">
+      {articles.map(art => {
+        const readingTime = Math.ceil((art.body?.split(/\s+/).length ?? 0) / 200);
+        const catLabel = art.data.category === 'running' ? 'Running' : 'Comparativas';
+        const dateStr = new Intl.DateTimeFormat('es-ES', { month: 'short', year: 'numeric' }).format(art.data.publishDate);
+        return (
+          <article class="post-card">
+            <a href={`/${art.slug}/`} tabindex="-1" aria-hidden="true">
+              <div class="pc-img"></div>
+            </a>
+            <div class="pc-body">
+              <a href={`/${art.data.category}/`} class="tag">{catLabel}</a>
+              <h2 class="post-card-title">
+                <a href={`/${art.slug}/`}>{art.data.title}</a>
+              </h2>
+              {art.data.excerpt && (
+                <p class="pc-excerpt">{art.data.excerpt}</p>
+              )}
+              <div class="pc-meta">
+                <span>{dateStr}</span>
+                <span>·</span>
+                <span>{readingTime} min</span>
+              </div>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </div>
+</section>

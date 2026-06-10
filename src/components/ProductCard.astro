@@ -1,0 +1,75 @@
+---
+interface Props {
+  rank: number;
+  name: string;
+  category?: string;
+  rating: string;
+  reviewCount?: number;
+  price: string;
+  priceNote?: string;
+  affiliateUrl: string;
+  pros: string[];
+  cons: string[];
+}
+
+const {
+  rank,
+  name,
+  category = '',
+  rating,
+  reviewCount,
+  price,
+  priceNote = '',
+  affiliateUrl,
+  pros,
+  cons,
+} = Astro.props;
+
+const stars = Math.round(parseFloat(rating.replace(',', '.')));
+const starsFull = '★'.repeat(Math.min(stars, 5));
+const starsEmpty = '☆'.repeat(Math.max(0, 5 - stars));
+---
+<div class="pcard">
+  <div class="p-img">
+    <span class="p-rank">Nº {rank}</span>
+    <span>foto · producto</span>
+  </div>
+  <div class="p-body">
+    {category && <span class="p-cat">{category}</span>}
+    <div class="p-name">{name}</div>
+    <div class="p-stars">
+      <span class="s" aria-hidden="true">{starsFull}{starsEmpty}</span>
+      <span class="sc">{rating} / 10{reviewCount ? ` · ${reviewCount} valoraciones` : ''}</span>
+    </div>
+    <div class="p-pc">
+      {pros.map(pro => (
+        <div class="pro">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 6L9 17l-5-5"/>
+          </svg>
+          {pro}
+        </div>
+      ))}
+      {cons.map(con => (
+        <div class="con">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+            <path d="M5 12h14"/>
+          </svg>
+          {con}
+        </div>
+      ))}
+    </div>
+    <div class="p-foot">
+      <div class="p-price">
+        {price}
+        {priceNote && <small>{priceNote}</small>}
+      </div>
+      <a href={affiliateUrl} class="btn-aff" rel="sponsored nofollow" target="_blank">
+        Ver precio
+        <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9h11M10 4l5 5-5 5"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</div>

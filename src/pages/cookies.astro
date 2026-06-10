@@ -1,0 +1,25 @@
+---
+import Layout from '../components/Layout.astro';
+const html = '<p><em>Última actualización: junio de 2026</em></p>\n<h2>1. ¿Qué son las cookies?</h2>\n<p>Las cookies son pequeños archivos de texto que se almacenan en tu dispositivo (ordenador, tablet o móvil) cuando visitás un sitio web. Se utilizan ampliamente para hacer que los sitios web funcionen de manera más eficiente, así como para proporcionar información a los propietarios del sitio.</p>\n<hr />\n<h2>2. Cookies que utilizamos</h2>\n<h3>2.1 Cookies estrictamente necesarias</h3>\n<p>Estas cookies son imprescindibles para el funcionamiento básico del Sitio. Sin ellas, el Sitio no puede funcionar correctamente. No requieren tu consentimiento.</p>\n<p>| Cookie | Proveedor | Finalidad | Duración |\n|--------|-----------|-----------|----------|\n| wordpress_* | WordPress | Gestión de sesión y funcionamiento del CMS | Sesión |\n| wp-settings-* | WordPress | Preferencias del usuario en el panel | 1 año |</p>\n<h3>2.2 Cookies analíticas</h3>\n<p>Estas cookies nos permiten analizar el uso del Sitio para mejorar su funcionamiento. Recogen información de forma anónima o agregada.</p>\n<p>| Cookie | Proveedor | Finalidad | Duración |\n|--------|-----------|-----------|----------|\n| _ga | Google Analytics | Distingue usuarios únicos | 2 años |\n| _ga_* | Google Analytics | Sesión de Google Analytics 4 | 2 años |\n| _gid | Google Analytics | Distingue usuarios (24h) | 24 horas |</p>\n<h3>2.3 Cookies de terceros — Amazon Associates</h3>\n<p>Cuando hacés clic en un enlace de afiliado hacia Amazon.es, Amazon puede instalar cookies en tu dispositivo para rastrear la compra y calcular las comisiones correspondientes. Estas cookies son gestionadas por Amazon y están sujetas a su propia política de privacidad.</p>\n<hr />\n<h2>3. ¿Cómo gestionar las cookies?</h2>\n<h3>3.1 A través del banner de cookies</h3>\n<p>Cuando accedés al Sitio por primera vez, aparecerá un banner que te permite aceptar o rechazar las cookies no esenciales. Podés cambiar tus preferencias en cualquier momento haciendo clic en el enlace "Gestionar cookies" disponible en el pie de página.</p>\n<h3>3.2 A través de tu navegador</h3>\n<p>Podés configurar tu navegador para bloquear o eliminar cookies. Ten en cuenta que deshabilitar algunas cookies puede afectar el funcionamiento del Sitio.</p>\n<p>Instrucciones para los principales navegadores:</p>\n<ul>\n<li><strong>Chrome</strong>: Configuración → Privacidad y seguridad → Cookies y otros datos de sitios</li>\n<li><strong>Firefox</strong>: Opciones → Privacidad y seguridad → Cookies y datos del sitio</li>\n<li><strong>Safari</strong>: Preferencias → Privacidad → Gestionar datos de sitios web</li>\n<li><strong>Edge</strong>: Configuración → Privacidad, búsqueda y servicios → Cookies</li>\n</ul>\n<h3>3.3 Opt-out de Google Analytics</h3>\n<p>Podés desactivar el seguimiento de Google Analytics instalando el complemento de inhabilitación disponible en: [tools.google.com/dlpage/gaoptout](https://tools.google.com/dlpage/gaoptout)</p>\n<hr />\n<h2>4. Cambios en esta política</h2>\n<p>Nos reservamos el derecho a modificar esta Política de Cookies en cualquier momento para adaptarla a cambios legislativos o en el funcionamiento del Sitio. Te recomendamos revisarla periódicamente.</p>\n<hr />\n<h2>5. Más información</h2>\n<p>Para cualquier consulta relacionada con el uso de cookies en este Sitio, podés contactarnos a través del formulario de contacto disponible en el Sitio.</p>\n<p>Para más información sobre el tratamiento de tus datos personales, consultá nuestra <strong>Política de Privacidad</strong>.</p>';
+---
+<Layout title="Política de Cookies — GuíaDeportiva.es" description="Política de cookies de GuíaDeportiva.es." noIndex={true}>
+  <div class="page-head">
+    <div class="wrap">
+      <nav class="crumb" aria-label="Migas de pan">
+        <a href="/">Inicio</a>
+        <span class="sep">/</span>
+        <span class="cur">Política de Cookies</span>
+      </nav>
+      <h1 style="font-family:var(--serif);font-weight:800;font-size:clamp(30px,4.5vw,50px);letter-spacing:-0.025em;line-height:1.06;margin-top:22px;">
+        Política de Cookies
+      </h1>
+    </div>
+  </div>
+  <div class="page-content">
+    <div class="wrap">
+      <div class="prose" style="max-width:720px;">
+        <Fragment set:html={html} />
+      </div>
+    </div>
+  </div>
+</Layout>

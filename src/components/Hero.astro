@@ -1,0 +1,41 @@
+---
+interface Props {
+  postCount: number;
+}
+const { postCount } = Astro.props;
+---
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow hero-eyebrow">GuíaDeportiva.es</span>
+    <h1>Las mejores zapatillas<br /><em>running</em> para cada corredor</h1>
+    <p class="lead">
+      Analizamos cada modelo en condiciones reales — kilómetros de calle, pista y trail —
+      para que tu próxima compra sea la correcta desde el primer uso.
+    </p>
+    <div class="hero-actions">
+      <a href="/running/" class="btn-primary">
+        Ver guías de running
+        <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9h11M10 4l5 5-5 5"/>
+        </svg>
+      </a>
+      <a href="/comparativas/" class="btn-secondary">
+        Comparativas
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="n">{postCount}+</div>
+        <div class="l">Guías publicadas</div>
+      </div>
+      <div class="hero-stat">
+        <div class="n">800+</div>
+        <div class="l">km de pruebas</div>
+      </div>
+      <div class="hero-stat">
+        <div class="n">100%</div>
+        <div class="l">Independiente</div>
+      </div>
+    </div>
+  </div>
+</section>

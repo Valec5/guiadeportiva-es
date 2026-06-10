@@ -1,0 +1,45 @@
+---
+interface Row {
+  model: string;
+  bestFor: string;
+  weight?: string;
+  drop?: string;
+  price?: string;
+  rating: string;
+  top?: boolean;
+}
+
+interface Props {
+  headers?: string[];
+  rows: Row[];
+}
+
+const {
+  headers = ['Modelo', 'Mejor para', 'Peso', 'Drop', 'Precio', 'Nota'],
+  rows,
+} = Astro.props;
+---
+<div class="table-wrap">
+  <table class="cmp">
+    <thead>
+      <tr>
+        {headers.map(h => <th>{h}</th>)}
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map(row => (
+        <tr>
+          <td class="model">
+            {row.model}
+            {row.top && <span class="badge" style="margin-left:8px;">Top general</span>}
+          </td>
+          <td>{row.bestFor}</td>
+          {row.weight !== undefined && <td>{row.weight}</td>}
+          {row.drop !== undefined && <td>{row.drop}</td>}
+          {row.price !== undefined && <td>{row.price}</td>}
+          <td><span class="nota">{row.rating}</span></td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>

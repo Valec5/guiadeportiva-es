@@ -1,0 +1,56 @@
+---
+const { currentPath = '' } = Astro.props;
+---
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="/" class="logo" aria-label="GuíaDeportiva inicio">
+      <span class="mark" aria-hidden="true"></span>
+      <span>Guía<b>Deportiva</b></span>
+      <span class="es">.es</span>
+    </a>
+    <nav class="nav-links" aria-label="Principal">
+      <a href="/running/" class={currentPath.startsWith('/running') ? 'active' : ''}>Running</a>
+      <a href="/comparativas/" class={currentPath.startsWith('/comparativas') ? 'active' : ''}>Comparativas</a>
+      <a href="/sobre-nosotros/">Sobre nosotros</a>
+      <a href="/contacto/">Contacto</a>
+      <a href="/" class="nav-cta">Ver guías</a>
+    </nav>
+    <button class="nav-burger" aria-label="Abrir menú" aria-expanded="false" id="nav-toggle">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7">
+        <path d="M3 6h14M3 10h14M3 14h14"/>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<div class="nav-mobile" id="nav-mobile" aria-hidden="true">
+  <div class="nav-drawer">
+    <a href="/">Inicio</a>
+    <a href="/running/">Running</a>
+    <a href="/comparativas/">Comparativas</a>
+    <a href="/sobre-nosotros/">Sobre nosotros</a>
+    <a href="/contacto/">Contacto</a>
+    <a href="/" class="nav-cta">Ver guías</a>
+  </div>
+</div>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const overlay = document.getElementById('nav-mobile');
+  if (toggle && overlay) {
+    toggle.addEventListener('click', () => {
+      const open = overlay.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(open));
+      overlay.setAttribute('aria-hidden', String(!open));
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        overlay.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+    });
+  }
+</script>
