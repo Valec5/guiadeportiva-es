@@ -1,0 +1,98 @@
+---
+import Layout from './Layout.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface LinkGroup {
+  label: string;
+  links: { href: string; text: string }[];
+}
+
+interface Props {
+  seoTitle: string;
+  seoDescription: string;
+  crumb: string;
+  heading: string;
+  eyebrow: string;
+  groups: LinkGroup[];
+  articles: CollectionEntry<'articles'>[];
+}
+
+const { seoTitle, seoDescription, crumb, heading, eyebrow, groups, articles } = Astro.props;
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Inicio', item: new URL('/', Astro.site).href },
+    { '@type': 'ListItem', position: 2, name: crumb, item: Astro.url.href },
+  ],
+};
+const monthYear = new Intl.DateTimeFormat('es-ES', { month: 'short', year: 'numeric', timeZone: 'UTC' });
+---
+<Layout title={seoTitle} description={seoDescription}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  </Fragment>
+
+  <div class="cat-archive-head">
+    <div class="wrap">
+      <nav class="crumb" aria-label="Migas de pan">
+        <a href="/">Inicio</a>
+        <span class="sep">/</span>
+        <span class="cur">{crumb}</span>
+      </nav>
+      <div style="margin-top:24px;">
+        <span class="eyebrow">{eyebrow}</span>
+        <h1 class="cat-title">{heading}</h1>
+        <div class="cat-intro">
+          <slot />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap" style="padding-top:clamp(40px,6vw,64px);padding-bottom:clamp(56px,7vw,88px);">
+    <nav class="subcats" aria-label="Explorar por tema">
+      {groups.map(g => (
+        <div class="subcat">
+          <h2>{g.label}</h2>
+          <ul>
+            {g.links.map(l => <li><a href={l.href}>{l.text}</a></li>)}
+          </ul>
+        </div>
+      ))}
+    </nav>
+
+    {articles.length > 0 ? (
+      <div class="posts-grid">
+        {articles.map(art => {
+          const readingTime = Math.ceil((art.body?.split(/\s+/).length ?? 0) / 200);
+          const date = art.data.updatedDate ?? art.data.publishDate;
+          return (
+            <article class="post-card">
+              <a href={`/${art.slug}/`} tabindex="-1" aria-hidden="true">
+                <div class="pc-img"></div>
+              </a>
+              <div class="pc-body">
+                <span class="tag">{crumb}</span>
+                <h2 class="post-card-title">
+                  <a href={`/${art.slug}/`}>{art.data.title}</a>
+                </h2>
+                <p class="pc-excerpt">{art.data.seoDescription}</p>
+                <div class="pc-meta">
+                  <span>Actualizado {monthYear.format(date)}</span>
+                  <span>·</span>
+                  <span>{readingTime} min</span>
+                </div>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    ) : (
+      <p style="color:var(--ink-soft);font-size:17px;padding:40px 0;">
+        No hay guías publicadas todavía.
+      </p>
+    )}
+  </div>
+</Layout>

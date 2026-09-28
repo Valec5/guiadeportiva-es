@@ -1,23 +1,29 @@
 ---
 import Layout from './Layout.astro';
+import FAQSchema from './FAQSchema.astro';
+import ProductSchema from './ProductSchema.astro';
+import type { FAQItem, ProductItem } from '../lib/seo';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
   article: CollectionEntry<'articles'>;
   headings: { depth: number; slug: string; text: string }[];
   related: CollectionEntry<'articles'>[];
+  faq: FAQItem[];
+  products: ProductItem[];
 }
 
-const { article, headings, related } = Astro.props;
-const { title, seoTitle, seoDescription, category, keyword, publishDate } = article.data;
+const { article, headings, related, faq, products } = Astro.props;
+const { title, seoTitle, seoDescription, category, keyword, publishDate, updatedDate } = article.data;
+const modifiedDate = updatedDate ?? publishDate;
 
 const tocItems = headings.filter(h => h.depth === 2 || h.depth === 3);
 const readingTime = Math.ceil(
   (article.body?.split(/\s+/).length ?? 0) / 200
 );
-const dateFormatted = new Intl.DateTimeFormat('es-ES', {
-  day: 'numeric', month: 'long', year: 'numeric'
-}).format(publishDate);
+const longDate = new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+const updatedFormatted = longDate.format(modifiedDate);
+const publishedFormatted = longDate.format(publishDate);
 
 const categoryLabel = category === 'running' ? 'Running' : 'Comparativas';
 const categoryHref = `/${category}/`;
@@ -33,7 +39,7 @@ const schemaData = {
     url: 'https://guiadeportiva.es',
   },
   datePublished: publishDate.toISOString(),
-  dateModified: publishDate.toISOString(),
+  dateModified: modifiedDate.toISOString(),
   mainEntityOfPage: { '@type': 'WebPage', '@id': Astro.url.href },
 };
 const breadcrumbSchema = {
@@ -50,6 +56,8 @@ const breadcrumbSchema = {
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
     <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+    <FAQSchema items={faq} />
+    <ProductSchema products={products} pageUrl={Astro.url.href} />
   </Fragment>
 
   <div class="progress" id="progress" aria-hidden="true"></div>
@@ -82,7 +90,13 @@ const breadcrumbSchema = {
           </div>
           <span class="vrule" aria-hidden="true"></span>
           <div class="meta">
-            <span>Actualizado {dateFormatted}</span>
+            <time datetime={modifiedDate.toISOString()}>Actualizado el {updatedFormatted}</time>
+            {updatedDate && (
+              <>
+                <span>·</span>
+                <span>Publicado el {publishedFormatted}</span>
+              </>
+            )}
             <span>·</span>
             <span>{readingTime} min de lectura</span>
           </div>
@@ -161,9 +175,9 @@ const breadcrumbSchema = {
             <div class="b-name">Equipo GuíaDeportiva</div>
             <div class="b-role">Editores de running en GuíaDeportiva.es</div>
             <p>
-              Nuestro equipo analiza cada zapatilla en condiciones reales: rodajes largos,
-              series en pista y más de 800 km de pruebas acumuladas. Independientes, sin
-              patrocinios de marca.
+              Analizamos cada zapatilla a partir de sus especificaciones técnicas, los datos del
+              fabricante y la experiencia de corredores reales. Independientes, sin patrocinios
+              de marca. <a href="/metodologia/">Así elaboramos nuestras guías</a>.
             </p>
           </div>
         </div>

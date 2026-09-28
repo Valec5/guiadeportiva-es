@@ -1,65 +1,76 @@
 ---
 import { getCollection } from 'astro:content';
-import Layout from '../../components/Layout.astro';
+import CategoryArchive from '../../components/CategoryArchive.astro';
 
 const articles = await getCollection('articles', a => a.data.category === 'running');
 articles.sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
+
+const groups = [
+  {
+    label: 'Por tipo de pisada',
+    links: [
+      { href: '/zapatillas-running-pronador/', text: 'Zapatillas para pronador' },
+      { href: '/zapatillas-running-dolor-rodilla/', text: 'Para dolor de rodilla' },
+      { href: '/zapatillas-running-peso-pesado/', text: 'Para peso pesado' },
+    ],
+  },
+  {
+    label: 'Por precio',
+    links: [
+      { href: '/zapatillas-running-baratas/', text: 'Zapatillas running baratas' },
+      { href: '/zapatillas-running-calidad-precio/', text: 'Mejor calidad-precio' },
+      { href: '/mejores-zapatillas-trail-running-baratas/', text: 'Trail running baratas' },
+    ],
+  },
+  {
+    label: 'Por marca',
+    links: [
+      { href: '/mejores-zapatillas-hoka/', text: 'Mejores Hoka' },
+      { href: '/mejores-zapatillas-on-running/', text: 'Mejores On Running' },
+      { href: '/mejores-zapatillas-nike-running/', text: 'Mejores Nike Running' },
+    ],
+  },
+  {
+    label: 'Por perfil',
+    links: [
+      { href: '/zapatillas-running-principiantes/', text: 'Para principiantes' },
+      { href: '/zapatillas-running-mujer/', text: 'Para mujer' },
+      { href: '/zapatillas-running-entrenamiento-diario/', text: 'Entrenamiento diario' },
+      { href: '/zapatillas-maraton/', text: 'Para maratón' },
+    ],
+  },
+  {
+    label: 'Otros deportes',
+    links: [
+      { href: '/mejores-zapatillas-crossfit/', text: 'Crossfit' },
+      { href: '/mejores-zapatillas-gym-hombre/', text: 'Gym hombre' },
+      { href: '/mejores-zapatillas-spinning/', text: 'Spinning' },
+      { href: '/mejores-zapatillas-padel-hombre/', text: 'Pádel hombre' },
+    ],
+  },
+];
 ---
-<Layout
-  title="Guías de Running — GuíaDeportiva.es"
-  description="Todas las guías de zapatillas running: por tipo de pisada, distancia, presupuesto y perfil de corredor. Análisis honestos y actualizados."
+<CategoryArchive
+  seoTitle="Zapatillas Running 2026: Guías por Pisada, Precio y Marca"
+  seoDescription="Encontrá tus zapatillas de running ideales: guías por tipo de pisada, presupuesto, marca y objetivo, con pros, contras y veredicto claro."
+  crumb="Running"
+  heading="Zapatillas Running"
+  eyebrow={`${articles.length} guías`}
+  groups={groups}
+  articles={articles}
 >
-  <div class="cat-archive-head">
-    <div class="wrap">
-      <nav class="crumb" aria-label="Migas de pan">
-        <a href="/">Inicio</a>
-        <span class="sep">/</span>
-        <span class="cur">Running</span>
-      </nav>
-      <div style="margin-top:24px;">
-        <span class="eyebrow">{articles.length} guías</span>
-        <h1 style="font-family:var(--serif);font-weight:800;font-size:clamp(34px,5vw,56px);letter-spacing:-0.025em;line-height:1.04;margin-top:14px;">
-          Zapatillas Running
-        </h1>
-        <p style="font-size:clamp(16px,1.6vw,19px);color:var(--ink-soft);margin-top:14px;max-width:56ch;line-height:1.6;">
-          Guías de compra para cada tipo de corredor: desde el principiante que da sus primeros
-          pasos hasta el maratoniano que busca batir su marca personal.
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <div class="wrap" style="padding-top:clamp(40px,6vw,64px);padding-bottom:clamp(56px,7vw,88px);">
-    <div class="posts-grid">
-      {articles.map(art => {
-        const readingTime = Math.ceil((art.body?.split(/\s+/).length ?? 0) / 200);
-        const dateStr = new Intl.DateTimeFormat('es-ES', { month: 'short', year: 'numeric' }).format(art.data.publishDate);
-        return (
-          <article class="post-card">
-            <a href={`/${art.slug}/`} tabindex="-1" aria-hidden="true">
-              <div class="pc-img"></div>
-            </a>
-            <div class="pc-body">
-              <span class="tag">Running</span>
-              <h2 class="post-card-title">
-                <a href={`/${art.slug}/`}>{art.data.title}</a>
-              </h2>
-              {art.data.excerpt && <p class="pc-excerpt">{art.data.excerpt}</p>}
-              <div class="pc-meta">
-                <span>{dateStr}</span>
-                <span>·</span>
-                <span>{readingTime} min</span>
-              </div>
-            </div>
-          </article>
-        );
-      })}
-    </div>
-  </div>
-</Layout>
-
-<style>
-.post-card-title { font-family:var(--serif);font-weight:600;font-size:19px;letter-spacing:-0.01em;line-height:1.22;color:var(--ink); }
-.post-card-title a { color:inherit; }
-.post-card:hover .post-card-title { color:var(--orange); }
-</style>
+  <p>
+    Elegir zapatillas de running no debería ser una lotería. En estas guías de compra comparamos
+    los modelos más relevantes de 2026 según lo que de verdad importa: tipo de pisada
+    (neutra o pronadora), amortiguación, drop, peso y durabilidad en kilómetros.
+  </p>
+  <p>
+    Tanto si buscás tus primeras zapatillas para empezar a correr como si preparás un maratón,
+    tenés guías por perfil de corredor, por presupuesto (zapatillas baratas y de mejor
+    relación calidad-precio) y por marca: Hoka, On Running, Nike, ASICS o Brooks.
+  </p>
+  <p>
+    Cada guía explica para quién es cada modelo y cuáles son sus contras, y se actualiza cuando
+    salen versiones nuevas. Consultá <a href="/metodologia/">cómo elaboramos nuestras guías</a>.
+  </p>
+</CategoryArchive>

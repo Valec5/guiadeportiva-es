@@ -1,10 +1,28 @@
 ---
 import Layout from '../components/Layout.astro';
+
+const site = Astro.site!.href.replace(/\/$/, '');
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  name: 'Sobre GuíaDeportiva.es',
+  url: `${site}/sobre-nosotros/`,
+  mainEntity: {
+    '@type': 'Organization',
+    name: 'GuíaDeportiva.es',
+    url: `${site}/`,
+    description: 'Guías y comparativas independientes de calzado deportivo para corredores en España.',
+  },
+};
 ---
 <Layout
   title="Sobre Nosotros — GuíaDeportiva.es"
-  description="Conoce al equipo de GuíaDeportiva.es: análisis honestos de zapatillas running, sin patrocinios de marca y con kilómetros reales de prueba."
+  description="Quiénes somos, cómo elegimos las zapatillas que recomendamos y cómo nos financiamos. Guías independientes, sin patrocinios de marca."
 >
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </Fragment>
+
   <div class="page-head">
     <div class="wrap">
       <nav class="crumb" aria-label="Migas de pan">
@@ -22,43 +40,69 @@ import Layout from '../components/Layout.astro';
       <div class="prose" style="max-width:720px;">
         <p>
           <strong>GuíaDeportiva.es</strong> nació de una pregunta simple: ¿por qué es tan difícil
-          encontrar información honesta sobre zapatillas running en español?
-        </p>
-        <p>
-          La mayoría de las guías están escritas por redactores que nunca han salido a correr
-          con los modelos que analizan, o están sesgadas por patrocinios de marca que condicionan
-          las puntuaciones. Nosotros decidimos hacer algo diferente.
+          encontrar información clara y honesta sobre zapatillas deportivas en español?
         </p>
 
-        <h2>Cómo trabajamos</h2>
+        <h2>Nuestra historia</h2>
         <p>
-          Cada zapatilla que aparece en nuestras guías ha sido probada en condiciones reales:
-          rodajes largos, series en pista, tiradas de 30 km y uso cotidiano durante semanas.
-          Acumulamos más de 800 km de pruebas antes de publicar cualquier análisis.
+          Buscar zapatillas de running suele terminar en decenas de pestañas abiertas: fichas de
+          fabricante llenas de nombres de espumas, rankings sin explicación y reseñas que se
+          contradicen. Creamos este sitio para ordenar esa información y convertirla en guías que
+          respondan a una pregunta concreta: <em>¿cuál es la mejor zapatilla para mi caso?</em>
         </p>
         <p>
-          Puntuamos en base a criterios objetivos — amortiguación, estabilidad, peso,
-          transpirabilidad, durabilidad y relación calidad-precio — y no aceptamos pagos
-          de marcas por aparecer en nuestros rankings.
+          Empezamos con guías de running —por tipo de pisada, presupuesto, marca y objetivo— y
+          fuimos sumando comparativas directas y otros deportes como crossfit, gimnasio, spinning
+          y pádel.
         </p>
 
-        <h2>Transparencia sobre afiliados</h2>
+        <h2>Cómo elegimos lo que recomendamos</h2>
         <p>
-          GuíaDeportiva.es participa en programas de afiliación, lo que significa que si compras
-          a través de nuestros enlaces podemos recibir una pequeña comisión, sin coste adicional
-          para ti. Esta comisión nos permite mantener el sitio funcionando.
+          Cada guía parte de un perfil de corredor concreto (pronador, principiante, maratoniano…)
+          y evalúa los modelos con los mismos criterios técnicos: amortiguación, estabilidad,
+          peso, drop, durabilidad y ajuste. Contrastamos las especificaciones del fabricante con la
+          experiencia de corredores reales y señalamos siempre los contras de cada modelo, no solo
+          sus virtudes.
         </p>
         <p>
-          Importante: <strong>nadie nos paga por aparecer en nuestras guías ni por recibir
-          una nota determinada</strong>. Puedes leer nuestra{' '}
-          <a href="/afiliados/">política de afiliados completa</a>.
+          Explicamos el proceso completo en nuestra <a href="/metodologia/">metodología</a>.
+        </p>
+
+        <h2>Quién está detrás</h2>
+        <div class="team-card">
+          <div class="photo" aria-hidden="true">foto<br />equipo</div>
+          <div>
+            <div class="t-name">Equipo GuíaDeportiva</div>
+            <div class="t-role">Redacción y análisis</div>
+            <p>
+              Un equipo de aficionados al running y al deporte que investiga, compara y actualiza
+              cada guía. Si detectas un error o un dato desactualizado, queremos saberlo.
+            </p>
+          </div>
+        </div>
+
+        <h2>Compromiso de transparencia</h2>
+        <div class="disclosure">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/>
+          </svg>
+          <div>
+            <b>Enlaces de afiliado:</b> GuíaDeportiva.es participa en el Programa de Afiliados de
+            Amazon EU. Si compras a través de nuestros enlaces podemos recibir una pequeña comisión,
+            sin coste adicional para ti.
+          </div>
+        </div>
+        <p>
+          Esa comisión es lo que mantiene el sitio. <strong>Ninguna marca nos paga por aparecer en
+          nuestras guías ni por recibir una recomendación determinada</strong>, y no mostramos
+          precios fijos: el precio y la disponibilidad reales los ves siempre en Amazon. Puedes
+          leer nuestra <a href="/afiliados/">política de afiliados completa</a>.
         </p>
 
         <h2>Contacto</h2>
         <p>
-          Si tienes preguntas, sugerencias o quieres reportar un error en alguna de nuestras
-          guías, escríbenos a través de la{' '}
-          <a href="/contacto/">página de contacto</a>.
+          Si tienes preguntas, sugerencias o quieres reportar un error en alguna guía, escríbenos
+          a través de la <a href="/contacto/">página de contacto</a>.
         </p>
       </div>
     </div>

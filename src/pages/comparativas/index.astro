@@ -1,71 +1,70 @@
 ---
 import { getCollection } from 'astro:content';
-import Layout from '../../components/Layout.astro';
+import CategoryArchive from '../../components/CategoryArchive.astro';
 
 const articles = await getCollection('articles', a => a.data.category === 'comparativas');
 articles.sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
+
+const groups = [
+  {
+    label: 'Marca vs marca',
+    links: [
+      { href: '/on-running-vs-hoka/', text: 'On Running vs Hoka' },
+      { href: '/asics-vs-brooks/', text: 'ASICS vs Brooks' },
+    ],
+  },
+  {
+    label: 'Competición',
+    links: [
+      { href: '/nike-alphafly-vs-adidas-adizero/', text: 'Nike Alphafly vs Adidas Adizero' },
+      { href: '/zapatillas-maraton/', text: 'Zapatillas para maratón' },
+    ],
+  },
+  {
+    label: 'Por tipo de pisada',
+    links: [
+      { href: '/zapatillas-running-pronador/', text: 'Zapatillas para pronador' },
+      { href: '/zapatillas-running-dolor-rodilla/', text: 'Para dolor de rodilla' },
+    ],
+  },
+  {
+    label: 'Por precio',
+    links: [
+      { href: '/zapatillas-running-baratas/', text: 'Zapatillas running baratas' },
+      { href: '/zapatillas-running-calidad-precio/', text: 'Mejor calidad-precio' },
+    ],
+  },
+  {
+    label: 'Guías por marca',
+    links: [
+      { href: '/mejores-zapatillas-hoka/', text: 'Mejores Hoka' },
+      { href: '/mejores-zapatillas-on-running/', text: 'Mejores On Running' },
+      { href: '/mejores-zapatillas-nike-running/', text: 'Mejores Nike Running' },
+    ],
+  },
+];
 ---
-<Layout
-  title="Comparativas de Zapatillas Running — GuíaDeportiva.es"
-  description="Comparativas directas entre los mejores modelos de zapatillas running: datos reales, pruebas en calle y veredicto claro."
+<CategoryArchive
+  seoTitle="Comparativas de Zapatillas Running 2026: Cara a Cara"
+  seoDescription="On vs Hoka, ASICS vs Brooks, Alphafly vs Adizero: comparativas cara a cara de zapatillas running con datos técnicos y un veredicto claro."
+  crumb="Comparativas"
+  heading="Comparativas"
+  eyebrow={`${articles.length} comparativas`}
+  groups={groups}
+  articles={articles}
 >
-  <div class="cat-archive-head">
-    <div class="wrap">
-      <nav class="crumb" aria-label="Migas de pan">
-        <a href="/">Inicio</a>
-        <span class="sep">/</span>
-        <span class="cur">Comparativas</span>
-      </nav>
-      <div style="margin-top:24px;">
-        <span class="eyebrow">{articles.length} comparativas</span>
-        <h1 style="font-family:var(--serif);font-weight:800;font-size:clamp(34px,5vw,56px);letter-spacing:-0.025em;line-height:1.04;margin-top:14px;">
-          Comparativas
-        </h1>
-        <p style="font-size:clamp(16px,1.6vw,19px);color:var(--ink-soft);margin-top:14px;max-width:56ch;line-height:1.6;">
-          Cara a cara entre los modelos más populares del mercado. Datos objetivos, pruebas
-          reales y un veredicto claro para que no tengas que dudar.
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <div class="wrap" style="padding-top:clamp(40px,6vw,64px);padding-bottom:clamp(56px,7vw,88px);">
-    {articles.length > 0 ? (
-      <div class="posts-grid">
-        {articles.map(art => {
-          const readingTime = Math.ceil((art.body?.split(/\s+/).length ?? 0) / 200);
-          const dateStr = new Intl.DateTimeFormat('es-ES', { month: 'short', year: 'numeric' }).format(art.data.publishDate);
-          return (
-            <article class="post-card">
-              <a href={`/${art.slug}/`} tabindex="-1" aria-hidden="true">
-                <div class="pc-img"></div>
-              </a>
-              <div class="pc-body">
-                <span class="tag">Comparativas</span>
-                <h2 class="post-card-title">
-                  <a href={`/${art.slug}/`}>{art.data.title}</a>
-                </h2>
-                {art.data.excerpt && <p class="pc-excerpt">{art.data.excerpt}</p>}
-                <div class="pc-meta">
-                  <span>{dateStr}</span>
-                  <span>·</span>
-                  <span>{readingTime} min</span>
-                </div>
-              </div>
-            </article>
-          );
-        })}
-      </div>
-    ) : (
-      <p style="color:var(--ink-soft);font-size:17px;padding:40px 0;">
-        No hay comparativas publicadas todavía.
-      </p>
-    )}
-  </div>
-</Layout>
-
-<style>
-.post-card-title { font-family:var(--serif);font-weight:600;font-size:19px;letter-spacing:-0.01em;line-height:1.22;color:var(--ink); }
-.post-card-title a { color:inherit; }
-.post-card:hover .post-card-title { color:var(--orange); }
-</style>
+  <p>
+    Cuando la duda está entre dos opciones concretas, una comparativa directa ahorra horas de
+    búsqueda. Acá enfrentamos las zapatillas y marcas de running más populares modelo por modelo:
+    tecnología de amortiguación, peso, drop, estabilidad y durabilidad real.
+  </p>
+  <p>
+    Encontrás duelos de marca (On Running vs Hoka, ASICS vs Brooks) y de zapatillas de
+    competición con placa de carbono (Nike Alphafly vs Adidas Adizero), siempre con un veredicto
+    según tu perfil de corredor y tipo de pisada.
+  </p>
+  <p>
+    Si todavía no tenés claro qué modelo buscar, empezá por nuestras guías de zapatillas running
+    por marca o por tipo de pisada.
+  </p>
+</CategoryArchive>
