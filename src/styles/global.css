@@ -263,9 +263,6 @@ header.nav {
   display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center;
   margin: 28px 0 36px; padding: 22px 20px; border: 1px solid var(--line); border-radius: 14px; background: var(--paper-warm);
 }
-.aff-price { display: flex; flex-direction: column; align-items: center; line-height: 1.2; }
-.aff-price span { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-faint); }
-.aff-price strong { font-family: var(--serif); font-weight: 700; font-size: 28px; color: var(--ink); }
 .btn-aff--lg { font-size: 17px; font-weight: 700; padding: 16px 30px; margin: 4px 0; justify-content: center; }
 .prose a.btn-aff { color: #fff; border-bottom: none; }
 .prose a.btn-aff--lg { font-weight: 700; }
