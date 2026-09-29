@@ -428,3 +428,4 @@ footer.site-footer .logo .es { color: #8d857d; }
 .team-card .t-role { font-family: var(--mono); font-size: 12px; color: var(--orange); margin-top: 2px; }
 .team-card p { font-size: 15px; color: var(--ink-soft); margin: 10px 0 0 !important; line-height: 1.6; }
 @media (max-width: 520px) { .team-card { flex-direction: column; } }
+.aff-cta--pair { flex-direction: row; flex-wrap: wrap; justify-content: center; }
