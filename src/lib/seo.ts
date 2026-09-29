@@ -17,7 +17,7 @@ export interface ProductItem {
 const BRANDS = [
   'New Balance', 'Under Armour', 'ASICS', 'Brooks', 'Saucony', 'Nike', 'Adidas', 'Hoka', 'On',
   'Mizuno', 'Puma', 'Reebok', 'Salomon', 'Merrell', 'Inov-8', 'NoBull', 'TYR', 'Shimano',
-  'Specialized', 'Fizik', 'Bontrager', 'Liv', 'Bullpadel', 'Wilson', 'Joma', 'Lotto', 'Head',
+  'Specialized', 'Fizik', 'Giro', 'Bontrager', 'Liv', 'Bullpadel', 'Wilson', 'Joma', 'Lotto', 'Head',
 ];
 
 /** Markdown/MDX inline syntax → plain text. */
