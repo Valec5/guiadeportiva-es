@@ -1,5 +1,6 @@
 import { getCollection } from 'astro:content';
 import type { APIContext } from 'astro';
+import { staticPageLastmod } from '../lib/static-pages';
 
 const isoDate = (d: Date) => d.toISOString().split('T')[0];
 
@@ -18,8 +19,8 @@ export async function GET(context: APIContext) {
     { url: `${site}/`, priority: '1.0', changefreq: 'weekly', lastmod: latest(articles) },
     { url: `${site}/running/`, priority: '0.9', changefreq: 'weekly', lastmod: latest(inCategory('running')) },
     { url: `${site}/comparativas/`, priority: '0.9', changefreq: 'weekly', lastmod: latest(inCategory('comparativas')) },
-    { url: `${site}/sobre-nosotros/`, priority: '0.5', changefreq: 'monthly' },
-    { url: `${site}/metodologia/`, priority: '0.5', changefreq: 'monthly' },
+    { url: `${site}/sobre-nosotros/`, priority: '0.5', changefreq: 'monthly', lastmod: staticPageLastmod['/sobre-nosotros/'] },
+    { url: `${site}/metodologia/`, priority: '0.5', changefreq: 'monthly', lastmod: staticPageLastmod['/metodologia/'] },
   ];
 
   const articlePages = articles.map(a => ({
