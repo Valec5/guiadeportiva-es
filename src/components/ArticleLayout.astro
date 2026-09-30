@@ -1,5 +1,6 @@
 ---
 import Layout from './Layout.astro';
+import CardImage from './CardImage.astro';
 import FAQSchema from './FAQSchema.astro';
 import ItemListSchema from './ItemListSchema.astro';
 import type { FAQItem, ProductItem } from '../lib/seo';
@@ -196,9 +197,7 @@ const breadcrumbSchema = {
         <div class="rel-grid">
           {related.map(r => (
             <a href={`/${r.slug}/`} class="rel-card">
-              <div class="r-img">
-                <span>foto · guía</span>
-              </div>
+              <div class="r-img"><CardImage article={r} /></div>
               <div class="r-body">
                 <span class="tag">{r.data.category === 'running' ? 'Running' : 'Comparativas'}</span>
                 <h3>{r.data.title}</h3>
