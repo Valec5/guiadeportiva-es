@@ -92,6 +92,11 @@ featured: false
    Una línea en blanco entre preguntas.
 6. `## Veredicto final` — una línea por perfil de corredor: `- **Si ...:** Modelo` (el nombre del modelo tal cual,
    para que el script le añada su botón).
+7. `## Fuentes de los datos` — al final, una línea por modelo con los enlaces de donde salen peso, drop y
+   especificaciones (RunRepeat, fichas de marca, análisis publicados), con `target="_blank" rel="noopener"`, y la
+   línea `Cómo seleccionamos y contrastamos los datos: [metodología](/metodologia/).` **Ningún dato técnico sin fuente:**
+   si no encuentras fuente para un dato, no lo publiques. Usa el peso y el drop de la marca (no el de laboratorio).
+   Artículos informativos (sin productos): sin tabla, picks ni talla; cierre con `## Conclusión` + fuentes.
 
 ## Reglas
 

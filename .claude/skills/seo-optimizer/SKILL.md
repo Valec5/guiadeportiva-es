@@ -24,6 +24,7 @@ Input: slug del artículo, o `todos`.
   columna "Amazon" en la tabla comparativa, "Ideal si / Evítala si" en cada producto, sección `## ¿Qué talla pido?`
   antes de las FAQ, botón en cada línea del veredicto y barra fija móvil (pick "Mejor general" o `topPick`).
   Si faltan botones: `python3 scripts/conversion-buttons.py <archivo>` (idempotente).
+- Sección `## Fuentes de los datos` al final con la fuente de cada dato técnico (ver `article-generator`).
 - Sitemap dinámico (`src/pages/sitemap.xml.ts`) con `lastmod` = `updatedDate`. No hace falta tocarlo por artículo.
 
 ## Proceso (por artículo)
