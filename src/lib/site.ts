@@ -2,8 +2,8 @@
 export const CONTACT_EMAIL = 'contacto@guiadeportiva.es';
 
 export const OWNER = {
-  // Full legal name of the owner. Pending: fill in before relying on the legal notice.
-  name: '',
+  // Full legal name of the owner, as published in the legal notice.
+  name: 'Valeria Lujan Cecilia Delgado',
   description: 'persona física residente en Montevideo (Uruguay)',
 };
 
