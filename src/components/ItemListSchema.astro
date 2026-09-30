@@ -1,0 +1,27 @@
+---
+import type { ProductItem } from '../lib/seo';
+
+// Lists the products reviewed in the article. Deliberately no Product/Offer/Rating: without a live
+// price source (Amazon API) those would be incomplete or invented, and Google flags them as errors.
+interface Props {
+  products: ProductItem[];
+  pageUrl: string;
+  name: string;
+}
+
+const { products, pageUrl, name } = Astro.props;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name,
+  numberOfItems: products.length,
+  itemListElement: products.map((p, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: p.name,
+    url: `${pageUrl}#${p.anchor}`,
+  })),
+};
+---
+{products.length > 0 && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}

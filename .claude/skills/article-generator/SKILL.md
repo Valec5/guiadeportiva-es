@@ -50,13 +50,14 @@ featured: false
 1. `## Resumen rápido` — 3 picks: `- **Mejor general** → Modelo`, `- **Mejor precio** → Modelo`, `- **Premium** → Modelo`.
    Luego un párrafo de contexto (~100 palabras).
 2. `## Tabla comparativa` — columnas técnicas (Modelo | Peso | Drop | ... | Mejor para). **Sin columna de precio.**
-3. Un bloque por producto, **con este encabezado exacto** (lo usa `extractProducts` para el Product schema):
+3. Un bloque por producto, **con este encabezado exacto** (lo usan `extractProducts` para el `ItemList` y
+   `rehype-product-anchors.mjs` para darle el ancla `#producto-N`):
    ```mdx
    ## 1. Marca Modelo — Mejor para X
 
    **Mejor para:** ...
 
-   <Párrafo descriptivo: tecnología, para quién es. Es la description del Product schema.>
+   <Párrafo descriptivo: tecnología, para quién es.>
 
    **Pros:**
    - (3-4)
@@ -67,7 +68,10 @@ featured: false
    **[Ver precio actual y disponibilidad en Amazon →]**
    ```
    El placeholder se reemplaza después con la skill `article-linker`. El nombre del producto debe empezar
-   por la marca; si la marca no está en `BRANDS` de `src/lib/seo.ts`, agregarla.
+   por la marca y usar el nombre oficial del modelo.
+   Structured data: el artículo genera un `ItemList` (cada `ListItem` con `position`, `name` y `url` =
+   `https://guiadeportiva.es/<slug>/#producto-N`). **No** usar `Product`/`Offer`/`AggregateRating`: sin precio
+   en vivo quedan incompletos y Google los marca como error. No inventar precio, rating ni review.
 4. Sección educativa (`## Cómo elegir…`, `## ¿Cómo saber si…?`, etc.).
 5. `## Preguntas frecuentes` — mínimo 4, **con este formato** (lo usa `extractFAQ` para el FAQPage schema):
    ```mdx
@@ -92,7 +96,8 @@ featured: false
 
 ## Cierre
 
-1. `npm run build` y verificar en `dist/<slug>/index.html`: FAQPage (≥4 preguntas), un Product por producto,
+1. `npm run build` y verificar en `dist/<slug>/index.html`: FAQPage (≥4 preguntas), `ItemList` con un elemento por producto
+   (cada `url` apunta a un `id` que existe en la página),
    BreadcrumbList, JSON-LD parseable y links internos existentes (ver script en la skill `seo-optimizer`).
 2. Commit: `feat: new article <slug>`, push a `main`, esperar deploy con
    `gh api repos/Valec5/guiadeportiva-es/commits/<sha>/status`.

@@ -4,11 +4,13 @@ import Layout from '../components/Layout.astro';
 import Hero from '../components/Hero.astro';
 import CategoryGrid from '../components/CategoryGrid.astro';
 import ArticleGrid from '../components/ArticleGrid.astro';
+import { extractProducts } from '../lib/seo';
 
 const allArticles = await getCollection('articles');
 allArticles.sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
 
 const featuredArticles = allArticles.filter(a => a.data.featured);
+const modelCount = new Set(allArticles.flatMap(a => extractProducts(a.body).map(p => p.name))).size;
 const runningCount = allArticles.filter(a => a.data.category === 'running').length;
 const comparativasCount = allArticles.filter(a => a.data.category === 'comparativas').length;
 
@@ -22,16 +24,47 @@ const categories = [
   {
     slug: 'comparativas',
     label: 'Comparativas',
-    description: 'Cara a cara entre los modelos más vendidos: datos, pruebas reales y veredicto claro.',
+    description: 'Cara a cara entre los modelos más populares: datos técnicos y un veredicto claro.',
     count: comparativasCount,
   },
 ];
 ---
 <Layout
   title="GuíaDeportiva.es — Las mejores zapatillas running para cada corredor"
-  description="Guías y comparativas honestas de zapatillas running para corredores en España. Más de 800 km de pruebas reales. 100% independiente."
+  description="Guías y comparativas independientes de zapatillas deportivas para corredores en España: elige por pisada, presupuesto, marca y objetivo."
 >
-  <Hero postCount={allArticles.length} />
+  <Hero postCount={allArticles.length} modelCount={modelCount} />
   <CategoryGrid categories={categories} />
+  <section class="intro-block">
+    <div class="wrap">
+      <div class="prose">
+        <h2>Cómo elegir tus zapatillas con GuíaDeportiva</h2>
+        <p>
+          GuíaDeportiva.es reúne guías de compra y comparativas de zapatillas deportivas pensadas
+          para corredores y deportistas en España. Cada guía responde a una pregunta concreta: qué
+          zapatilla necesitas si pronas, si estás empezando a correr, si preparas un maratón o si
+          buscas la mejor relación calidad-precio.
+        </p>
+        <p>
+          Para elegir los modelos comparamos siempre los mismos criterios —amortiguación,
+          estabilidad, peso, drop, durabilidad y ajuste— y los contrastamos con los datos del
+          fabricante y la experiencia de otros corredores. Explicamos el proceso completo en nuestra
+          <a href="/metodologia/">metodología</a>. No publicamos precios fijos: cada producto enlaza
+          a Amazon, donde ves el precio y la disponibilidad reales en ese momento.
+        </p>
+        <p>Si no sabes por dónde empezar, estas guías son un buen punto de partida:</p>
+        <ul>
+          <li><a href="/zapatillas-running-principiantes/">Zapatillas para principiantes</a>: qué buscar en tu primer par y un plan para las primeras semanas.</li>
+          <li><a href="/zapatillas-running-pronador/">Zapatillas para pronador</a>: modelos con soporte medial y cómo saber si pronas.</li>
+          <li><a href="/zapatillas-running-calidad-precio/">Zapatillas calidad-precio</a>: la gama media que cubre lo que necesita la mayoría.</li>
+          <li><a href="/zapatillas-maraton/">Zapatillas para maratón</a>: opciones para tu primera maratón o para buscar marca personal.</li>
+        </ul>
+        <p>
+          También tienes guías por marca (Hoka, On Running, Nike) y de otros deportes como crossfit,
+          gimnasio, spinning y pádel.
+        </p>
+      </div>
+    </div>
+  </section>
   <ArticleGrid articles={featuredArticles} title="Guías destacadas" eyebrow="Selección del editor" />
 </Layout>

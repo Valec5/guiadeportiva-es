@@ -52,7 +52,7 @@ Producto 2: ...
    recibido sin reemplazar, avisar.
 5. Actualizar `updatedDate` del frontmatter a hoy.
 6. `npm run build` y confirmar que el HTML de `dist/<slug>/index.html` tiene los links.
-   El Product schema toma el `offers.url` automáticamente del primer link de Amazon de cada sección.
+   El link de Amazon no va al JSON-LD: el artículo usa `ItemList` (nombre + ancla `#producto-N`), sin precios ni ofertas.
 7. Commit solo del MDX: `feat: add real affiliate links to <slug>` y push a `main`.
 8. Esperar el deploy: `gh api repos/Valec5/guiadeportiva-es/commits/<sha>/status --jq '.state'` hasta `success`.
 9. Actualizar "Historial" y "Pendientes" en `~/Guiadep/CLAUDE.md`.

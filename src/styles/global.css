@@ -429,3 +429,9 @@ footer.site-footer .logo .es { color: #8d857d; }
 .team-card p { font-size: 15px; color: var(--ink-soft); margin: 10px 0 0 !important; line-height: 1.6; }
 @media (max-width: 520px) { .team-card { flex-direction: column; } }
 .aff-cta--pair { flex-direction: row; flex-wrap: wrap; justify-content: center; }
+
+/* ---------- INTRO BLOCKS (home, category archives) ---------- */
+.intro-block { padding-block: clamp(40px,5vw,64px); }
+.intro-block .prose, .cat-guide { max-width: 760px; }
+.cat-guide { margin-bottom: clamp(36px,5vw,56px); }
+.intro-block .prose h2:first-child, .cat-guide h2:first-child { margin-top: 0; }

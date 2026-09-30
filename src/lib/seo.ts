@@ -8,17 +8,9 @@ export interface FAQItem {
 
 export interface ProductItem {
   name: string;
-  brand?: string;
-  description?: string;
-  url?: string;
+  /** Id of the product heading, set by src/lib/rehype-product-anchors.mjs. */
+  anchor: string;
 }
-
-// Multi-word brands first so "New Balance 860v14" doesn't resolve to "New".
-const BRANDS = [
-  'New Balance', 'Under Armour', 'ASICS', 'Brooks', 'Saucony', 'Nike', 'Adidas', 'Hoka', 'On',
-  'Mizuno', 'Puma', 'Reebok', 'Salomon', 'Merrell', 'Inov-8', 'NoBull', 'TYR', 'Shimano',
-  'Specialized', 'Fizik', 'Giro', 'Bontrager', 'Liv', 'Bullpadel', 'Wilson', 'Joma', 'Lotto', 'Head',
-];
 
 /** Markdown/MDX inline syntax → plain text. */
 export function plainText(md: string): string {
@@ -50,32 +42,14 @@ export function extractFAQ(body: string): FAQItem[] {
   return items;
 }
 
-function brandOf(name: string): string | undefined {
-  const lower = name.toLowerCase();
-  return BRANDS.find(b => lower === b.toLowerCase() || lower.startsWith(b.toLowerCase() + ' '));
-}
-
 /**
- * Reviewed products: "## 1. Nombre — Subtítulo" (listicles) or "## Nombre en detalle" (comparativas).
- * Description is the first prose paragraph of the section; url the first Amazon link, if any.
+ * Reviewed products in page order: "## 1. Nombre — Subtítulo" (guides) or "## Nombre en detalle"
+ * (comparativas). Must match the headings rehype-product-anchors.mjs numbers as #producto-N.
  */
 export function extractProducts(body: string): ProductItem[] {
-  const products: ProductItem[] = [];
-  const re = /^## (?:\d+\.\s+(.+?)\s+—.*|(.+?) en detalle)\s*$([\s\S]*?)(?=^## |(?![\s\S]))/gm;
-  for (const m of body.matchAll(re)) {
-    const name = plainText(m[1] ?? m[2]);
-    const content = m[3];
-    const paragraph = content
-      .split(/\n\s*\n/)
-      .map(p => p.trim())
-      .find(p => p && !/^(\*\*|-|\||<|\d+\.)/.test(p));
-    const url = content.match(/href="(https:\/\/[^"]*amazon[^"]*)"/)?.[1];
-    products.push({
-      name,
-      brand: brandOf(name),
-      description: paragraph ? plainText(paragraph) : undefined,
-      url,
-    });
-  }
-  return products;
+  const re = /^## (?:\d+\.\s+(.+?)\s+—.*|(.+?) en detalle)\s*$/gm;
+  return [...body.matchAll(re)].map((m, i) => ({
+    name: plainText(m[1] ?? m[2]),
+    anchor: `producto-${i + 1}`,
+  }));
 }

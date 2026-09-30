@@ -63,6 +63,12 @@ const monthYear = new Intl.DateTimeFormat('es-ES', { month: 'short', year: 'nume
       ))}
     </nav>
 
+    {Astro.slots.has('guide') && (
+      <section class="cat-guide prose">
+        <slot name="guide" />
+      </section>
+    )}
+
     {articles.length > 0 ? (
       <div class="posts-grid">
         {articles.map(art => {

@@ -1,16 +1,17 @@
 ---
 interface Props {
   postCount: number;
+  modelCount: number;
 }
-const { postCount } = Astro.props;
+const { postCount, modelCount } = Astro.props;
 ---
 <section class="hero">
   <div class="wrap">
     <span class="eyebrow hero-eyebrow">GuíaDeportiva.es</span>
     <h1>Las mejores zapatillas<br /><em>running</em> para cada corredor</h1>
     <p class="lead">
-      Analizamos cada modelo en condiciones reales — kilómetros de calle, pista y trail —
-      para que tu próxima compra sea la correcta desde el primer uso.
+      Comparamos cada modelo por lo que de verdad importa —pisada, amortiguación, drop,
+      peso y durabilidad— para que tu próxima compra sea la correcta desde el primer uso.
     </p>
     <div class="hero-actions">
       <a href="/running/" class="btn-primary">
@@ -29,8 +30,8 @@ const { postCount } = Astro.props;
         <div class="l">Guías publicadas</div>
       </div>
       <div class="hero-stat">
-        <div class="n">800+</div>
-        <div class="l">km de pruebas</div>
+        <div class="n">{modelCount}</div>
+        <div class="l">Modelos analizados</div>
       </div>
       <div class="hero-stat">
         <div class="n">100%</div>

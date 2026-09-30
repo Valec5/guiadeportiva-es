@@ -1,6 +1,6 @@
 ---
 name: seo-optimizer
-description: Aplica y verifica SEO on-page en uno o todos los artículos de guiadeportiva.es (frontmatter, links internos contextuales, FAQ/Product/Breadcrumb schema). Usar cuando el usuario pida optimizar SEO de un slug o de "todos".
+description: Aplica y verifica SEO on-page en uno o todos los artículos de guiadeportiva.es (frontmatter, links internos contextuales, FAQ/ItemList/Breadcrumb schema). Usar cuando el usuario pida optimizar SEO de un slug o de "todos".
 ---
 
 # seo-optimizer
@@ -16,8 +16,10 @@ Input: slug del artículo, o `todos`.
   - `Article` (con `dateModified` = `updatedDate`) y `BreadcrumbList` (Inicio > Running|Comparativas > Título).
   - `FAQPage` vía `src/components/FAQSchema.astro`, extraído de la sección `## Preguntas frecuentes`
     con formato `**¿Pregunta?**` + respuesta en la línea siguiente (`src/lib/seo.ts` → `extractFAQ`).
-  - `Product` vía `src/components/ProductSchema.astro`, extraído de encabezados `## N. Nombre — Subtítulo`
-    o `## Nombre en detalle` (`extractProducts`). Marca: lista `BRANDS` en `src/lib/seo.ts`.
+  - `ItemList` vía `src/components/ItemListSchema.astro`, extraído de encabezados `## N. Nombre — Subtítulo`
+    o `## Nombre en detalle` (`extractProducts`). Cada `ListItem` apunta a `#producto-N`, el `id` que
+    `src/lib/rehype-product-anchors.mjs` pone en ese encabezado. Sin `Product`/`Offer`/ratings (ver `article-generator`).
+- Imagen OG por artículo generada en el build: `src/pages/og/[slug].png.ts` (`src/lib/og.ts`), 1200x630.
 - Sitemap dinámico (`src/pages/sitemap.xml.ts`) con `lastmod` = `updatedDate`. No hace falta tocarlo por artículo.
 
 ## Proceso (por artículo)
@@ -47,8 +49,8 @@ Input: slug del artículo, o `todos`.
    print('JSON-LD válido y sin links internos rotos')
    PY
    ```
-   Y confirmar en el HTML del artículo: `FAQPage` con tantas preguntas como el MDX, un `Product` por producto
-   (con `brand`; si falta, agregar la marca a `BRANDS`), `BreadcrumbList`, y "Actualizado el …" visible.
+   Y confirmar en el HTML del artículo: `FAQPage` con tantas preguntas como el MDX, `ItemList` con un elemento
+   por producto (cada `#producto-N` existe en la página), `BreadcrumbList`, `og:image` = `/og/<slug>.png`, y "Actualizado el …" visible.
    Si una FAQ o producto no aparece, el problema es el formato del encabezado en el MDX: corregir el MDX.
 7. Opcional: validar online con
    `curl -s -X POST https://validator.schema.org/validate --data-urlencode "html@dist/<slug>/index.html"`

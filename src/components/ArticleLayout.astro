@@ -1,7 +1,7 @@
 ---
 import Layout from './Layout.astro';
 import FAQSchema from './FAQSchema.astro';
-import ProductSchema from './ProductSchema.astro';
+import ItemListSchema from './ItemListSchema.astro';
 import type { FAQItem, ProductItem } from '../lib/seo';
 import type { CollectionEntry } from 'astro:content';
 
@@ -52,12 +52,12 @@ const breadcrumbSchema = {
   ],
 };
 ---
-<Layout title={seoTitle} description={seoDescription}>
+<Layout title={seoTitle} description={seoDescription} ogImage={`/og/${article.slug}.png`} ogType="article">
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
     <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
     <FAQSchema items={faq} />
-    <ProductSchema products={products} pageUrl={Astro.url.href} />
+    <ItemListSchema products={products} pageUrl={Astro.url.href} name={title} />
   </Fragment>
 
   <div class="progress" id="progress" aria-hidden="true"></div>
