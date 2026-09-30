@@ -1,25 +1,75 @@
 ---
-import Layout from '../components/Layout.astro';
-const html = '<p><em>Última actualización: junio de 2026</em></p>\n<h2>1. Datos identificativos</h2>\n<p>En cumplimiento del artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y Comercio Electrónico (LSSI-CE), se pone a disposición de los usuarios la siguiente información:</p>\n<p><strong>Sitio web</strong>: guiadeportiva.es  \n<strong>Contacto</strong>: disponible a través del formulario de contacto del Sitio.</p>\n<hr />\n<h2>2. Objeto y ámbito de aplicación</h2>\n<p>El presente Aviso Legal regula el acceso y uso del sitio web <strong>guiadeportiva.es</strong> (en adelante, "el Sitio"), de titularidad del responsable indicado anteriormente.</p>\n<p>El acceso al Sitio implica la aceptación plena y sin reservas de las presentes condiciones. Si no estás de acuerdo con alguna de ellas, te rogamos que no accedas ni utilices el Sitio.</p>\n<hr />\n<h2>3. Propiedad intelectual e industrial</h2>\n<p>Todos los contenidos del Sitio — incluyendo textos, imágenes, logotipos, diseños, código fuente y cualquier otro elemento — son propiedad del titular del Sitio o de terceros que han autorizado su uso, y están protegidos por la legislación española e internacional sobre propiedad intelectual e industrial.</p>\n<p>Queda expresamente prohibida la reproducción, distribución, comunicación pública o transformación de los contenidos del Sitio sin la autorización expresa y por escrito del titular, salvo en los casos previstos por la ley.</p>\n<hr />\n<h2>4. Condiciones de uso</h2>\n<p>El usuario se compromete a hacer un uso adecuado de los contenidos y servicios del Sitio, y en particular a no utilizarlos para:</p>\n<ul>\n<li>Difundir contenidos ilícitos, violentos, pornográficos, racistas o contrarios a la moral y al orden público.</li>\n<li>Introducir virus informáticos o cualquier otro elemento que pueda dañar los sistemas informáticos del Sitio o de terceros.</li>\n<li>Infringir derechos de propiedad intelectual o industrial.</li>\n<li>Realizar actividades publicitarias o de explotación comercial no autorizadas.</li>\n</ul>\n<hr />\n<h2>5. Exclusión de garantías y responsabilidad</h2>\n<p>El titular del Sitio no garantiza la disponibilidad, continuidad ni infalibilidad del funcionamiento del Sitio, y no se responsabiliza de los daños y perjuicios de cualquier naturaleza que puedan derivarse de:</p>\n<ul>\n<li>La falta de disponibilidad o accesibilidad al Sitio.</li>\n<li>Los errores u omisiones en los contenidos.</li>\n<li>La presencia de virus u otros elementos en los contenidos que puedan causar alteraciones en los sistemas informáticos de los usuarios.</li>\n</ul>\n<p>Los contenidos del Sitio tienen carácter meramente informativo. El titular no garantiza la exactitud, completitud o actualidad de la información publicada, y no se hace responsable de las decisiones tomadas por los usuarios en base a dicha información.</p>\n<hr />\n<h2>6. Enlaces a sitios de terceros</h2>\n<p>El Sitio puede contener enlaces a sitios web de terceros, incluyendo Amazon España. El titular del Sitio no tiene control sobre dichos sitios y no se responsabiliza de sus contenidos, políticas de privacidad ni prácticas.</p>\n<p>La inclusión de un enlace a un sitio de terceros no implica la recomendación ni aprobación del mismo por parte del titular del Sitio.</p>\n<hr />\n<h2>7. Programa de afiliados Amazon</h2>\n<p>Este sitio web participa en el <strong>Programa de Afiliados de Amazon EU</strong>, un programa de publicidad para afiliados diseñado para ofrecer a sitios web un modo de obtener comisiones por publicidad, mediante la creación de enlaces hacia Amazon.es.</p>\n<p>Como Asociado de Amazon, el titular del Sitio obtiene ingresos por las compras que cumplen los requisitos aplicables. Esto no supone ningún coste adicional para el usuario.</p>\n<p>Para más información, consulta nuestra <strong>Política de Divulgación de Afiliados</strong>.</p>\n<hr />\n<h2>8. Legislación aplicable y jurisdicción</h2>\n<p>Las presentes condiciones se rigen por la legislación española. Para la resolución de cualquier controversia derivada del acceso o uso del Sitio, las partes se someten, con renuncia expresa a cualquier otro fuero, a los Juzgados y Tribunales de España.</p>';
+import LegalPage from '../components/LegalPage.astro';
+import { CONTACT_EMAIL, OWNER } from '../lib/site';
 ---
-<Layout title="Aviso Legal — GuíaDeportiva.es" description="Aviso legal de GuíaDeportiva.es." noIndex={true}>
-  <div class="page-head">
-    <div class="wrap">
-      <nav class="crumb" aria-label="Migas de pan">
-        <a href="/">Inicio</a>
-        <span class="sep">/</span>
-        <span class="cur">Aviso Legal</span>
-      </nav>
-      <h1 style="font-family:var(--serif);font-weight:800;font-size:clamp(30px,4.5vw,50px);letter-spacing:-0.025em;line-height:1.06;margin-top:22px;">
-        Aviso Legal
-      </h1>
-    </div>
-  </div>
-  <div class="page-content">
-    <div class="wrap">
-      <div class="prose" style="max-width:720px;">
-        <Fragment set:html={html} />
-      </div>
-    </div>
-  </div>
-</Layout>
+<LegalPage
+  title="Aviso Legal — GuíaDeportiva.es"
+  description="Aviso legal de GuíaDeportiva.es."
+  heading="Aviso Legal"
+>
+  <h2>1. Datos identificativos</h2>
+  <p>
+    En cumplimiento del artículo 10 de la Ley 34/2002, de Servicios de la Sociedad de la Información y de
+    Comercio Electrónico (LSSI-CE), se facilitan los siguientes datos:
+  </p>
+  <ul>
+    <li><strong>Titular:</strong> {OWNER.name ? `${OWNER.name}, ` : ''}{OWNER.description}</li>
+    <li><strong>Sitio web:</strong> guiadeportiva.es</li>
+    <li><strong>Correo electrónico:</strong> <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></li>
+    <li><strong>Alojamiento:</strong> Vercel Inc.</li>
+  </ul>
+
+  <h2>2. Objeto</h2>
+  <p>
+    Este Aviso Legal regula el acceso y el uso del sitio web guiadeportiva.es (en adelante, "el Sitio"),
+    que publica guías de compra y comparativas de calzado deportivo. El uso del Sitio implica la
+    aceptación de estas condiciones.
+  </p>
+
+  <h2>3. Propiedad intelectual e industrial</h2>
+  <p>
+    Los textos, el diseño, el logotipo, las imágenes propias y el código del Sitio pertenecen a su titular
+    o a terceros que han autorizado su uso. No está permitida su reproducción, distribución o
+    transformación sin autorización, salvo en los casos previstos por la ley. Las marcas y nombres de
+    productos citados pertenecen a sus respectivos propietarios y se mencionan solo a efectos
+    informativos.
+  </p>
+
+  <h2>4. Condiciones de uso</h2>
+  <p>Te comprometes a hacer un uso adecuado del Sitio y, en particular, a no utilizarlo para:</p>
+  <ul>
+    <li>Actividades ilícitas o contrarias a la buena fe.</li>
+    <li>Introducir virus u otros elementos que puedan dañar el Sitio o los equipos de terceros.</li>
+    <li>Infringir derechos de propiedad intelectual o industrial.</li>
+  </ul>
+
+  <h2>5. Responsabilidad</h2>
+  <p>
+    Los contenidos del Sitio son informativos. Procuramos que sean exactos y estén actualizados, pero las
+    especificaciones, la disponibilidad y los precios de los productos pueden cambiar. Antes de comprar,
+    comprueba la información en la ficha del producto del vendedor. El titular no se hace responsable
+    de las decisiones tomadas únicamente a partir de estos contenidos ni de las interrupciones del
+    servicio ajenas a su control.
+  </p>
+
+  <h2>6. Enlaces a sitios de terceros</h2>
+  <p>
+    El Sitio incluye enlaces a sitios de terceros, principalmente Amazon.es. No controlamos esos sitios
+    y no somos responsables de sus contenidos, condiciones ni políticas de privacidad.
+  </p>
+
+  <h2>7. Programa de afiliados de Amazon</h2>
+  <p>
+    GuíaDeportiva.es participa en el Programa de Afiliados de Amazon EU, un programa de publicidad para
+    afiliados diseñado para ofrecer a sitios web un modo de obtener comisiones por publicidad, mediante
+    la creación de enlaces a Amazon.es. Como Asociado de Amazon, el titular obtiene ingresos por las
+    compras adscritas que cumplen los requisitos aplicables, sin coste adicional para ti. Más
+    información en nuestra <a href="/afiliados/">divulgación de afiliados</a>.
+  </p>
+
+  <h2>8. Legislación aplicable</h2>
+  <p>
+    Estas condiciones se rigen por la legislación española. Si eres consumidor, podrás acudir a los
+    tribunales de tu domicilio conforme a la normativa de protección de los consumidores.
+  </p>
+</LegalPage>
