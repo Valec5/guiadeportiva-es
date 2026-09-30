@@ -48,8 +48,11 @@ featured: false
 ## Estructura (AIDA) — respetar los formatos de encabezado, el JSON-LD depende de ellos
 
 1. `## Resumen rápido` — 3 picks: `- **Mejor general** → Modelo`, `- **Mejor precio** → Modelo`, `- **Premium** → Modelo`.
-   Luego un párrafo de contexto (~100 palabras).
-2. `## Tabla comparativa` — columnas técnicas (Modelo | Peso | Drop | ... | Mejor para). **Sin columna de precio.**
+   Luego un párrafo de contexto (~100 palabras). El pick **"Mejor general"** es el que muestra la barra fija del móvil
+   ("Nuestra elección"); si el artículo no tiene picks, poner `topPick: "<nombre exacto del producto>"` en el frontmatter.
+2. `## Tabla comparativa` — la primera columna **debe llamarse `Modelo`** y cada fila empezar por el nombre del producto;
+   luego columnas técnicas (Peso | Drop | ... | Mejor para). **Sin columna de precio.** La columna "Amazon" con botones
+   no se escribe a mano: la añade `scripts/conversion-buttons.py` cuando haya links (ver `article-linker`).
 3. Un bloque por producto, **con este encabezado exacto** (lo usan `extractProducts` para el `ItemList` y
    `rehype-product-anchors.mjs` para darle el ancla `#producto-N`):
    ```mdx
@@ -65,6 +68,10 @@ featured: false
    **Contras:**
    - (2-3, honestos)
 
+   **Ideal si** <perfil concreto, coherente con el texto>.
+
+   **Evítala si** <perfil concreto; sin datos técnicos nuevos>.
+
    **[Ver precio actual y disponibilidad en Amazon →]**
    ```
    El placeholder se reemplaza después con la skill `article-linker`. El nombre del producto debe empezar
@@ -73,13 +80,18 @@ featured: false
    `https://guiadeportiva.es/<slug>/#producto-N`). **No** usar `Product`/`Offer`/`AggregateRating`: sin precio
    en vivo quedan incompletos y Google los marca como error. No inventar precio, rating ni review.
 4. Sección educativa (`## Cómo elegir…`, `## ¿Cómo saber si…?`, etc.).
+   Justo antes de las FAQ, `## ¿Qué talla pido?` (80-120 palabras): medir el pie por la tarde y con el calcetín del
+   deporte, margen en la puntera según el deporte (running: un dedo; entrenamiento/pádel: menos; ciclismo: ajustada),
+   revisar la guía de tallas de la marca en la ficha de Amazon. Solo afirmaciones de horma ampliamente conocidas;
+   ante la duda, no afirmar. Copiar el tono de las secciones existentes (p. ej. `01-pronador.mdx`).
 5. `## Preguntas frecuentes` — mínimo 4, **con este formato** (lo usa `extractFAQ` para el FAQPage schema):
    ```mdx
    **¿Pregunta?**
    Respuesta en la línea siguiente.
    ```
    Una línea en blanco entre preguntas.
-6. `## Veredicto final` — una línea por perfil de corredor: `- **Si ...:** Modelo`.
+6. `## Veredicto final` — una línea por perfil de corredor: `- **Si ...:** Modelo` (el nombre del modelo tal cual,
+   para que el script le añada su botón).
 
 ## Reglas
 
@@ -93,6 +105,7 @@ featured: false
 - Si encaja en algún grupo de `src/pages/running/index.astro` o `src/pages/comparativas/index.astro`
   (por pisada, precio, marca, perfil, otros deportes), agregarlo a esa lista de links.
 - Sitemap: se genera solo desde la colección, no hace falta tocarlo.
+- Conversión: sin urgencia falsa ("últimas unidades", "oferta por tiempo limitado"), sin reseñas ni valoraciones inventadas.
 
 ## Cierre
 

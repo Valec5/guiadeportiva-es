@@ -50,9 +50,15 @@ Producto 2: ...
    ```
    Si un producto recibido no tiene sección en el artículo, o queda un placeholder de un producto
    recibido sin reemplazar, avisar.
-5. Actualizar `updatedDate` del frontmatter a hoy.
-6. `npm run build` y confirmar que el HTML de `dist/<slug>/index.html` tiene los links.
+5. Añadir los botones compactos (`.btn-aff--sm`) al resumen, la tabla y el veredicto con el mismo link de cada producto:
+   ```bash
+   python3 scripts/conversion-buttons.py src/content/articles/<archivo>.mdx
+   ```
+   Es idempotente. Revisa la salida: una tabla "omitida" significa que alguna fila no coincide con un producto.
+   La barra fija del móvil toma sola el pick "Mejor general" y su link (no hay que tocar nada).
+6. Actualizar `updatedDate` del frontmatter a hoy.
+7. `npm run build` y confirmar que el HTML de `dist/<slug>/index.html` tiene los links.
    El link de Amazon no va al JSON-LD: el artículo usa `ItemList` (nombre + ancla `#producto-N`), sin precios ni ofertas.
-7. Commit solo del MDX: `feat: add real affiliate links to <slug>` y push a `main`.
-8. Esperar el deploy: `gh api repos/Valec5/guiadeportiva-es/commits/<sha>/status --jq '.state'` hasta `success`.
-9. Actualizar "Historial" y "Pendientes" en `~/Guiadep/CLAUDE.md`.
+8. Commit solo del MDX: `feat: add real affiliate links to <slug>` y push a `main`.
+9. Esperar el deploy: `gh api repos/Valec5/guiadeportiva-es/commits/<sha>/status --jq '.state'` hasta `success`.
+10. Actualizar "Historial" y "Pendientes" en `~/Guiadep/CLAUDE.md`.

@@ -1,0 +1,47 @@
+---
+import type { TopPick } from '../lib/seo';
+
+// Mobile-only bar (< 768px) with the article's headline pick. It is fixed and slides in with a
+// transform after the first scroll, so it never shifts layout (no CLS); a static spacer after the
+// footer keeps it from covering the end of the page. Closing it hides it for the rest of the visit.
+// If a cookie banner is added later, give it the attribute data-cookie-banner: the bar stays hidden
+// while that banner is visible.
+interface Props {
+  pick: TopPick;
+}
+
+const { pick } = Astro.props;
+---
+<div class="sticky-pick" id="sticky-pick" role="complementary" aria-label="Nuestra elección">
+  <div class="sp-text">
+    <span class="sp-label">Nuestra elección</span>
+    <strong class="sp-name">{pick.name}</strong>
+  </div>
+  <a href={pick.url} class="btn-aff btn-aff--sm" target="_blank" rel="nofollow sponsored noopener">Ver en Amazon</a>
+  <button type="button" class="sp-close" id="sticky-pick-close" aria-label="Cerrar">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 2l10 10M12 2 2 12"/></svg>
+  </button>
+</div>
+<div class="sticky-pick-spacer" aria-hidden="true"></div>
+
+<script>
+  const bar = document.getElementById('sticky-pick');
+  const KEY = 'gd-sticky-pick-closed';
+  const closed = () => { try { return sessionStorage.getItem(KEY) === '1'; } catch { return false; } };
+  const bannerOpen = () => !!document.querySelector('[data-cookie-banner]:not([hidden])');
+
+  if (bar && !closed()) {
+    const onScroll = () => {
+      const show = window.scrollY > 240 && !bannerOpen();
+      bar.classList.toggle('is-visible', show);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    document.getElementById('sticky-pick-close')?.addEventListener('click', () => {
+      try { sessionStorage.setItem(KEY, '1'); } catch {}
+      window.removeEventListener('scroll', onScroll);
+      bar.classList.remove('is-visible');
+    });
+  }
+</script>

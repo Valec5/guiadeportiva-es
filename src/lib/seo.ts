@@ -53,3 +53,37 @@ export function extractProducts(body: string): ProductItem[] {
     anchor: `producto-${i + 1}`,
   }));
 }
+
+export interface TopPick {
+  name: string;
+  url: string;
+}
+
+const AMAZON_HREF = /href="(https:\/\/(?:www\.amazon\.es|link\.amazon)\/[^"]+)"/;
+
+/**
+ * The article's headline recommendation for the mobile sticky bar: the "Mejor general" quick pick
+ * (or the first pick), resolved to its product section and that section's Amazon link.
+ * `override` (frontmatter `topPick`) names the product directly, for articles without quick picks.
+ */
+export function extractTopPick(body: string, override?: string): TopPick | undefined {
+  const sections = [...body.matchAll(/^## (?:\d+\.\s+(.+?)\s+—.*|(.+?) en detalle)\s*$([\s\S]*?)(?=^## |(?![\s\S]))/gm)]
+    .map(m => ({ name: plainText(m[1] ?? m[2]), url: m[3].match(AMAZON_HREF)?.[1] }))
+    .filter((p): p is TopPick => !!p.url);
+  if (!sections.length) return undefined;
+
+  let wanted = override;
+  if (!wanted) {
+    const picks = (section(body, /Resumen rápido/) ?? '')
+      .split('\n')
+      .filter(l => l.startsWith('- ') && l.includes('→'));
+    const pick = picks.find(l => /Mejor general/i.test(l)) ?? picks[0];
+    wanted = pick ? plainText(pick.split('→')[1].replace(/<a [^>]*>.*?<\/a>/g, '')) : undefined;
+  }
+  if (!wanted) return undefined;
+  // Match on the longest product name contained in the pick (picks may omit "Mujer", etc.).
+  const norm = (s: string) => s.toLowerCase().replace(/\s+mujer$/, '');
+  return [...sections]
+    .sort((a, b) => b.name.length - a.name.length)
+    .find(p => norm(wanted!).includes(norm(p.name)) || norm(p.name).includes(norm(wanted!)));
+}

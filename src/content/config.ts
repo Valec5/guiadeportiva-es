@@ -15,6 +15,8 @@ const articles = defineCollection({
     // Card image. Empty until product images come from the Amazon API; cards fall back to the OG image.
     image: z.string().optional(),
     imageAlt: z.string().optional(),
+    // Product for the mobile sticky bar when the article has no "Mejor general" quick pick.
+    topPick: z.string().optional(),
   }),
 });
 

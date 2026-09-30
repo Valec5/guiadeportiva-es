@@ -3,7 +3,8 @@ import Layout from './Layout.astro';
 import CardImage from './CardImage.astro';
 import FAQSchema from './FAQSchema.astro';
 import ItemListSchema from './ItemListSchema.astro';
-import type { FAQItem, ProductItem } from '../lib/seo';
+import StickyPick from './StickyPick.astro';
+import type { FAQItem, ProductItem, TopPick } from '../lib/seo';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
@@ -12,9 +13,10 @@ interface Props {
   related: CollectionEntry<'articles'>[];
   faq: FAQItem[];
   products: ProductItem[];
+  topPick?: TopPick;
 }
 
-const { article, headings, related, faq, products } = Astro.props;
+const { article, headings, related, faq, products, topPick } = Astro.props;
 const { title, seoTitle, seoDescription, category, keyword, publishDate, updatedDate } = article.data;
 const modifiedDate = updatedDate ?? publishDate;
 
@@ -213,6 +215,7 @@ const breadcrumbSchema = {
       </div>
     </section>
   )}
+  {topPick && <StickyPick slot="end" pick={topPick} />}
 </Layout>
 
 <script>

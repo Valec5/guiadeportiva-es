@@ -20,6 +20,10 @@ Input: slug del artículo, o `todos`.
     o `## Nombre en detalle` (`extractProducts`). Cada `ListItem` apunta a `#producto-N`, el `id` que
     `src/lib/rehype-product-anchors.mjs` pone en ese encabezado. Sin `Product`/`Offer`/ratings (ver `article-generator`).
 - Imagen OG por artículo generada en el build: `src/pages/og/[slug].png.ts` (`src/lib/og.ts`), 1200x630.
+- Elementos de conversión que cada artículo debe tener (ver `article-generator`): botón compacto en cada pick del resumen,
+  columna "Amazon" en la tabla comparativa, "Ideal si / Evítala si" en cada producto, sección `## ¿Qué talla pido?`
+  antes de las FAQ, botón en cada línea del veredicto y barra fija móvil (pick "Mejor general" o `topPick`).
+  Si faltan botones: `python3 scripts/conversion-buttons.py <archivo>` (idempotente).
 - Sitemap dinámico (`src/pages/sitemap.xml.ts`) con `lastmod` = `updatedDate`. No hace falta tocarlo por artículo.
 
 ## Proceso (por artículo)
@@ -50,7 +54,8 @@ Input: slug del artículo, o `todos`.
    PY
    ```
    Y confirmar en el HTML del artículo: `FAQPage` con tantas preguntas como el MDX, `ItemList` con un elemento
-   por producto (cada `#producto-N` existe en la página), `BreadcrumbList`, `og:image` = `/og/<slug>.png`, y "Actualizado el …" visible.
+   por producto (cada `#producto-N` existe en la página), `BreadcrumbList`, `og:image` = `/og/<slug>.png`, "Actualizado el …" visible,
+   la barra `sticky-pick` con el modelo esperado y todos los links de Amazon con `rel="nofollow sponsored noopener"`.
    Si una FAQ o producto no aparece, el problema es el formato del encabezado en el MDX: corregir el MDX.
 7. Opcional: validar online con
    `curl -s -X POST https://validator.schema.org/validate --data-urlencode "html@dist/<slug>/index.html"`

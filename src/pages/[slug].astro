@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import ArticleLayout from '../components/ArticleLayout.astro';
-import { extractFAQ, extractProducts } from '../lib/seo';
+import { extractFAQ, extractProducts, extractTopPick } from '../lib/seo';
 
 export async function getStaticPaths() {
   const articles = await getCollection('articles');
@@ -15,6 +15,7 @@ const { article } = Astro.props;
 const { Content, headings } = await article.render();
 const faq = extractFAQ(article.body);
 const products = extractProducts(article.body);
+const topPick = extractTopPick(article.body, article.data.topPick);
 
 // Related: same category, different slug, max 3
 const allArticles = await getCollection('articles');
@@ -23,6 +24,6 @@ const related = allArticles
   .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime())
   .slice(0, 3);
 ---
-<ArticleLayout article={article} headings={headings} related={related} faq={faq} products={products}>
+<ArticleLayout article={article} headings={headings} related={related} faq={faq} products={products} topPick={topPick}>
   <Content />
 </ArticleLayout>
