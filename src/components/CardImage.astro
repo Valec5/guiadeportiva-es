@@ -1,0 +1,25 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+// Card thumbnail for an article. Today it uses the article's own OG image (generated at build).
+// When product images are available (Amazon Creators API), set `image` in the article frontmatter:
+// the card switches to it automatically, shown whole ("contain") instead of cropped.
+interface Props {
+  article: CollectionEntry<'articles'>;
+}
+
+const { article } = Astro.props;
+const { image, imageAlt, title } = article.data;
+
+const src = image ?? `/og/${article.slug}.png`;
+const alt = image ? (imageAlt ?? title) : title;
+---
+<img
+  src={src}
+  alt={alt}
+  width="1200"
+  height="630"
+  loading="lazy"
+  decoding="async"
+  class:list={['card-img', { 'card-img--product': !!image }]}
+/>

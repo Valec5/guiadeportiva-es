@@ -12,6 +12,9 @@ const articles = defineCollection({
     updatedDate: z.coerce.date().optional(),
     featured: z.boolean().default(false),
     excerpt: z.string().optional(),
+    // Card image. Empty until product images come from the Amazon API; cards fall back to the OG image.
+    image: z.string().optional(),
+    imageAlt: z.string().optional(),
   }),
 });
 
