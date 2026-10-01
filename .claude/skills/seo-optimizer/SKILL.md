@@ -1,66 +1,116 @@
 ---
 name: seo-optimizer
-description: Aplica y verifica SEO on-page en uno o todos los artículos de guiadeportiva.es (frontmatter, links internos contextuales, FAQ/ItemList/Breadcrumb schema). Usar cuando el usuario pida optimizar SEO de un slug o de "todos".
+description: Aplica SEO on-page a un artículo de guiadeportiva.es (o a todos con "all") sin tocar el contenido textual - frontmatter/metas, H2 con muletillas, interlinking contextual con rotación de anchors y verificación de schemas (FAQPage, ItemList, BreadcrumbList). Ortogonal a human-polish.
 ---
 
 # seo-optimizer
 
-Input: slug del artículo, o `todos`.
+Input: slug del artículo (match flexible, como en `article-linker`) o `all`.
 
-## Cómo está armado el SEO en este proyecto (no reinventarlo)
+## Territorio (no pisar a human-polish)
 
-- Frontmatter validado por `src/content/config.ts`: `title`, `slug`, `category` (`running` | `comparativas`),
-  `keyword`, `seoTitle`, `seoDescription`, `publishDate`, `updatedDate` (opcional), `featured`, `excerpt`.
-  **La fecha de actualización se llama `updatedDate`** (no `lastUpdated`).
-- JSON-LD generado automáticamente en `src/components/ArticleLayout.astro`:
-  - `Article` (con `dateModified` = `updatedDate`) y `BreadcrumbList` (Inicio > Running|Comparativas > Título).
-  - `FAQPage` vía `src/components/FAQSchema.astro`, extraído de la sección `## Preguntas frecuentes`
-    con formato `**¿Pregunta?**` + respuesta en la línea siguiente (`src/lib/seo.ts` → `extractFAQ`).
-  - `ItemList` vía `src/components/ItemListSchema.astro`, extraído de encabezados `## N. Nombre — Subtítulo`
-    o `## Nombre en detalle` (`extractProducts`). Cada `ListItem` apunta a `#producto-N`, el `id` que
-    `src/lib/rehype-product-anchors.mjs` pone en ese encabezado. Sin `Product`/`Offer`/ratings (ver `article-generator`).
-- Imagen OG por artículo generada en el build: `src/pages/og/[slug].png.ts` (`src/lib/og.ts`), 1200x630.
-- Elementos de conversión que cada artículo debe tener (ver `article-generator`): botón compacto en cada pick del resumen,
-  columna "Amazon" en la tabla comparativa, "Ideal si / Evítala si" en cada producto, sección `## ¿Qué talla pido?`
-  antes de las FAQ, botón en cada línea del veredicto y barra fija móvil (pick "Mejor general" o `topPick`).
-  Si faltan botones: `python3 scripts/conversion-buttons.py <archivo>` (idempotente).
-- Sección `## Fuentes de los datos` al final con la fuente de cada dato técnico (ver `article-generator`).
-- Sitemap dinámico (`src/pages/sitemap.xml.ts`) con `lastmod` = `updatedDate`. No hace falta tocarlo por artículo.
+| Toca | No toca |
+|---|---|
+| Frontmatter: `title`, `seoTitle`, `seoDescription`, `excerpt`, `keyword`, `updatedDate` | Prosa del cuerpo (muletillas, ritmo, voz: es de `human-polish`) |
+| Encabezados H2/H3 | Tablas, botones y links de afiliado |
+| Links internos (insertar, quitar duplicados, arreglar rotos) | Datos técnicos, `## Fuentes de los datos` |
+| Verificación de schemas | Nunca borra información factual |
 
-## Proceso (por artículo)
+Para insertar un link puede envolver una frase existente o añadir **una** oración corta de enlace;
+no reescribe párrafos.
 
-1. Localizar el archivo: `grep -l '^slug: "<slug>"' src/content/articles/*.mdx`.
-2. **Frontmatter:**
-   - `seoTitle` ≤ 60 caracteres, con keyword.
-   - `seoDescription` ≤ 155 caracteres: gancho + beneficio + llamada a la acción. Sin precios, sin comillas dobles.
-   - No afirmar cosas no verificables ("probadas", "las favoritas de los podólogos") salvo que el artículo lo sustente.
-   - Medir longitudes con Python (`len()`), no a ojo.
-3. **Links internos:** listar los que ya tiene (`grep -oE '\]\(/[a-z0-9-]+/\)'`). Objetivo 3-5 destinos distintos.
-   Leer los demás artículos (frontmatter + temas) para elegir relacionados reales. Insertar dentro de frases
-   existentes o una oración breve en el mismo párrafo, con anchor descriptivo ("zapatillas para dolor de rodilla",
-   nunca "clic aquí"). No duplicar un destino ya enlazado, no enlazar el propio artículo, no forzar un link
-   si no hay relación temática. Usar URLs relativas con barra final: `/slug/`.
-4. **Contenido:** sin precios en € ni ratings inventados (ver `spain-language` para el idioma).
-5. **Fecha:** actualizar `updatedDate` a hoy **solo** si cambió el contenido del artículo.
-6. `npm run build` y verificar en `dist/`:
-   ```bash
-   python3 - <<'PY'
-   import re,json,glob,os
-   for f in glob.glob('dist/*/index.html'):
-       h=open(f).read()
-       for b in re.findall(r'<script type="application/ld\+json">(.*?)</script>',h,re.S): json.loads(b)
-       for href in re.findall(r'href="(/[^"#?]*/)"',h):
-           assert os.path.exists('dist'+href+'index.html'), (f,href)
-   print('JSON-LD válido y sin links internos rotos')
-   PY
-   ```
-   Y confirmar en el HTML del artículo: `FAQPage` con tantas preguntas como el MDX, `ItemList` con un elemento
-   por producto (cada `#producto-N` existe en la página), `BreadcrumbList`, `og:image` = `/og/<slug>.png`, "Actualizado el …" visible,
-   la barra `sticky-pick` con el modelo esperado y todos los links de Amazon con `rel="nofollow sponsored noopener"`.
-   Si una FAQ o producto no aparece, el problema es el formato del encabezado en el MDX: corregir el MDX.
-7. Opcional: validar online con
-   `curl -s -X POST https://validator.schema.org/validate --data-urlencode "html@dist/<slug>/index.html"`
-   (la respuesta empieza con `)]}'`; mirar `totalNumErrors` y `totalNumWarnings`).
-8. Commit: `feat: SEO optimization for <slug>` (o `for all articles`), push a `main`, esperar deploy
-   con `gh api repos/Valec5/guiadeportiva-es/commits/<sha>/status`.
-9. Actualizar "Historial" en `~/Guiadep/CLAUDE.md`.
+## Fase A — Frontmatter
+
+Comprobar en cada artículo:
+- `title`: keyword principal + año (`2026`) en guías y comparativas. Excepción: artículos informativos
+  perennes (`cuanto-duran-…`, `como-saber-si-soy-pronador`) no llevan año en el `title` (sí puede ir en `seoTitle`).
+- `seoTitle`: ≤60 caracteres, keyword al principio (se acepta "Mejores" delante si la keyword lo incluye o
+  es una guía de "mejores"). Cambiar un `seoTitle` que ya posiciona solo si incumple: no reescribir por reescribir.
+- `seoDescription`: ≤155 caracteres, gancho + beneficio + llamada a la acción. Sin precios, sin comillas dobles,
+  sin "versátil", "ideal", "perfecto", "excepcional" ni el resto de la lista negra de `human-polish`.
+- `excerpt`: mismas reglas; nunca prometer "precios" (el sitio no publica precios).
+- `slug`, `category` (`running` | `comparativas`, enum de `src/content/config.ts`), `keyword`, `publishDate`, `featured`: presentes.
+- `updatedDate` → hoy (es el campo que usa el proyecto; no existe `lastUpdated`).
+
+## Fase B — H2 con muletillas
+
+Si un H2/H3 contiene una palabra de la lista negra de `human-polish` ("versátil", "perfecto", "excepcional"…),
+reescribirlo con un sustituto preciso al contexto ("La más versátil" → "Para rodajes y cambios de ritmo").
+
+- En encabezados de producto (`## N. Nombre — Subtítulo` o `## Nombre en detalle`) **solo** se cambia el
+  subtítulo tras ` — `: el nombre alimenta el `ItemList` y el ancla es `#producto-N`, que no depende del texto.
+- Tras cambiar un encabezado, buscar links a su ancla vieja en todo el sitio:
+  ```bash
+  grep -rnoE '\]\(/[^)]*#[^)]*\)|href="/[^"]*#[^"]*"' src
+  ```
+
+## Fase C — Interlinking
+
+Objetivo: **3-5 destinos internos distintos** por artículo, dentro del cuerpo (no como lista final).
+
+1. Elegir destinos por afinidad: keyword, categoría, productos y marcas en común, perfil de lector.
+2. Anchor descriptivo con la keyword del destino ("zapatillas para pronador", "cuánto duran las zapatillas de running");
+   nunca "clic aquí" ni "este artículo".
+3. **Sin duplicados**: un mismo destino una sola vez por artículo (fuera de `## Fuentes de los datos`).
+   Si hay dos, quitar uno o cambiarlo por otro destino relevante.
+4. Rotación: consultar y actualizar `.claude/skills/seo-optimizer/anchor-map.json`
+   (`map[origen][destino] = [anchors]`). Si otro artículo ya usa el mismo anchor hacia el mismo destino, preferir
+   una variante. Regenerarlo al final (ver script abajo).
+5. Solo destinos que existen: slugs de `src/content/articles/` o páginas estáticas
+   (`/metodologia/`, `/sobre-nosotros/`, `/running/`, `/comparativas/`…). Formato `/slug/`.
+
+## Fase D — Schemas
+
+Los schemas **no se importan en el MDX**: los genera `src/components/ArticleLayout.astro` a partir del contenido.
+
+- `FAQSchema.astro` (FAQPage): sale de `## Preguntas frecuentes` con el formato `**¿Pregunta?**` + respuesta
+  **en una sola línea** (lo parsea `extractFAQ` en `src/lib/seo.ts`). Mínimo 4 preguntas en artículos nuevos.
+- `ItemListSchema.astro` (ItemList): un `ListItem` por encabezado de producto, `url` = `…/<slug>/#producto-N`.
+- `BreadcrumbList`: en el layout (y en `CategoryArchive.astro` para las categorías).
+- **Nunca `Product`/`Offer`/`AggregateRating`/`Review`.** Sin precio en vivo, Google los marca como error
+  ("Either offers, review, or aggregateRating should be specified"); por eso el sitio pasó a `ItemList`
+  (CLAUDE.md, 2026-09-29). `ProductSchema.astro` ya no existe. Si algún día hay Product Advertising API con
+  precio en vivo, se replantea entonces. No inventar precio, rating ni review.
+
+## Fase E — Verificación
+
+```bash
+npm run build
+# Por página: FAQ y ItemList presentes
+for d in dist/*/; do f=$d/index.html; q=$(grep -o '"@type":"Question"' $f | wc -l); i=$(grep -o '"@type":"ListItem"' $f | wc -l); [ $q -gt 0 ] && echo "$(basename $d) faq=$q items=$i"; done
+```
+
+Script de auditoría de metas, links y anchor map (desde la raíz del proyecto):
+
+```bash
+python3 - <<'EOF'
+import re,glob,json
+slugs={re.search(r'^slug: "(.*)"',open(f).read(),re.M)[1] for f in glob.glob('src/content/articles/*.mdx')}
+static={'metodologia','sobre-nosotros','afiliados','running','comparativas','contacto','privacidad','cookies','aviso-legal'}
+amap={}
+for f in sorted(glob.glob('src/content/articles/*.mdx')):
+    s=open(f).read(); fm=s.split('---')[1]; slug=re.search(r'^slug: "(.*)"',fm,re.M)[1]
+    for k,lim in (('seoTitle',60),('seoDescription',155)):
+        v=re.search(rf'^{k}: "(.*)"',fm,re.M)[1]
+        if len(v)>lim: print('LARGO',f,k,len(v))
+    body=s.split('---',2)[2].split('## Fuentes de los datos')[0]
+    links=re.findall(r'\[([^\]]+)\]\(/([^)#/]+)/?\)',body); dests=[d for _,d in links]
+    for d in set(dests):
+        if dests.count(d)>1: print('DUP',f,d)
+        if d not in slugs|static: print('ROTO',f,d)
+    if len({d for d in dests if d in slugs})<3: print('POCOS',f)
+    amap[slug]={}
+    for a,d in links:
+        if d in slugs: amap[slug].setdefault(f'/{d}/',[]).append(a)
+json.dump({'map':amap},open('.claude/skills/seo-optimizer/anchor-map.json','w'),ensure_ascii=False,indent=1)
+EOF
+grep -nE '^#{2,3} .*(versátil|perfect|excepcional|óptim|robust|innovador|revolucionari)' src/content/articles/*.mdx   # debe salir vacío
+```
+
+## Commit y reporte
+
+- Un artículo: `feat: SEO optimization for <slug>`. Modo `all`: `feat: SEO optimization pass across all articles`.
+- Push a `main`, esperar deploy (`gh api repos/Valec5/guiadeportiva-es/commits/<sha>/status --jq '.state'`).
+- Reporte: metas actualizadas (antes → después), H2 reescritos (antes → después), interlinks nuevos
+  (origen → destino, anchor), schemas verificados, resultado del build.
+- Actualizar "Historial" y "Pendientes" en `~/Guiadep/CLAUDE.md`.

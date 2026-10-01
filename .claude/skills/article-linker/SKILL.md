@@ -1,6 +1,6 @@
 ---
 name: article-linker
-description: Reemplaza los placeholders de CTA de afiliado por links reales de Amazon en un artículo MDX de guiadeportiva.es. Usar cuando el usuario pase un slug de artículo y una lista "Producto → URL de Amazon".
+description: Reemplaza los placeholders de CTA de afiliado por links reales de Amazon en un artículo MDX de guiadeportiva.es sin romper el build. Usar cuando el usuario pase un slug de artículo y una lista "Producto → URL de Amazon".
 ---
 
 # article-linker
@@ -8,57 +8,98 @@ description: Reemplaza los placeholders de CTA de afiliado por links reales de A
 ## Input esperado
 
 ```
-Artículo: zapatillas-running-pronador
-Producto 1: Asics Gel-Kayano 31 → https://...
-Producto 2: ...
+Artículo: pronador                       # slug o parte del slug / del nombre de archivo
+Producto 1: Asics Gel-Kayano 31 → https://link.amazon/...
+Producto 2: Brooks Adrenaline GTS 25 → https://www.amazon.es/dp/...?tag=guiadeportiva-21
 ```
 
-## Dónde está cada cosa
+## 1. Encontrar el artículo
 
-- Artículos: `src/content/articles/NN-nombre.mdx`. El archivo **no** se llama como el slug:
-  buscarlo por el frontmatter con `grep -l '^slug: "<slug>"' src/content/articles/*.mdx`.
-- Cada producto es una sección `## N. Nombre — Subtítulo` (en comparativas: `## Nombre en detalle`).
-- El placeholder está al final de la sección del producto:
-  `**[Ver precio actual y disponibilidad en Amazon →]**` (variante vieja: `**[Ver precio actual en Amazon →]**`).
-- Comparativas (08, 13, 15) usan placeholders por marca/modelo: `**[Ver Alphafly en Amazon →]**`,
-  `**[Ver Hoka en Amazon →]** | **[Ver On Running en Amazon →]**`, etc. Reemplazar cada uno por separado.
+Los archivos llevan prefijo numérico y su nombre no siempre coincide con el slug (`01-pronador.mdx` →
+`zapatillas-running-pronador`). Buscar en este orden y quedarse con una sola coincidencia:
 
-## Proceso
+```bash
+grep -l '^slug: "<slug>"' src/content/articles/*.mdx      # slug exacto
+ls src/content/articles/ | grep -i '<texto>'                # match flexible por nombre de archivo
+grep -l '^slug: ".*<texto>.*"' src/content/articles/*.mdx   # match flexible por slug
+```
 
-1. **Validar cada URL antes de insertarla:**
-   ```bash
-   curl -sL -o /dev/null -m 20 -w "%{http_code} %{url_effective}\n" "<URL>"
-   ```
-   El destino final debe ser `amazon.es`, el producto correcto y contener `tag=guiadeportiva-21`.
-   Los links cortos de SiteStripe (`https://link.amazon/...`, `amzn.to/...`) son válidos si terminan así.
-   Un 503 de Amazon a curl es bloqueo anti-bot, no un error, si la URL final es correcta.
-   Si un link no llega a amazon.es o no lleva el tag, **no insertarlo** y avisar al usuario.
-2. Para cada producto, ubicar la sección `## N. <Nombre> —` que coincide con el nombre recibido
-   y reemplazar **el placeholder de esa sección** (no el primero que aparezca) por:
-   ```html
-   <div class="aff-cta">
-     <a href="URL" class="btn-aff btn-aff--lg" target="_blank" rel="nofollow sponsored noopener">Ver precio actual y disponibilidad en Amazon →</a>
-   </div>
-   ```
-   - `rel="nofollow sponsored noopener"` es obligatorio (política de Amazon Associates).
-   - **Nunca** usar sintaxis `{:target=...}`: en MDX `{` es una expresión JS y rompe el build.
-3. Reglas de contenido: no agregar precios, "desde X €", ratings ni disponibilidad fija.
-4. Verificar:
-   ```bash
-   grep -n -B25 'btn-aff' <archivo> | grep -E '^[0-9]+-## |btn-aff'   # cada link bajo su producto
-   grep -n 'Ver precio actual' <archivo> | grep -v btn-aff              # placeholders restantes
-   ```
-   Si un producto recibido no tiene sección en el artículo, o queda un placeholder de un producto
-   recibido sin reemplazar, avisar.
-5. Añadir los botones compactos (`.btn-aff--sm`) al resumen, la tabla y el veredicto con el mismo link de cada producto:
-   ```bash
-   python3 scripts/conversion-buttons.py src/content/articles/<archivo>.mdx
-   ```
-   Es idempotente. Revisa la salida: una tabla "omitida" significa que alguna fila no coincide con un producto.
-   La barra fija del móvil toma sola el pick "Mejor general" y su link (no hay que tocar nada).
-6. Actualizar `updatedDate` del frontmatter a hoy.
-7. `npm run build` y confirmar que el HTML de `dist/<slug>/index.html` tiene los links.
-   El link de Amazon no va al JSON-LD: el artículo usa `ItemList` (nombre + ancla `#producto-N`), sin precios ni ofertas.
-8. Commit solo del MDX: `feat: add real affiliate links to <slug>` y push a `main`.
-9. Esperar el deploy: `gh api repos/Valec5/guiadeportiva-es/commits/<sha>/status --jq '.state'` hasta `success`.
-10. Actualizar "Historial" y "Pendientes" en `~/Guiadep/CLAUDE.md`.
+Si hay 0 o más de 1 candidato, preguntar al usuario antes de seguir.
+
+## 2. Validar cada URL (antes de tocar el archivo)
+
+```bash
+curl -sL -o /dev/null -m 20 -w "%{http_code} %{url_effective}\n" "<URL>"
+```
+
+- El destino final debe ser `amazon.es`, el producto correcto y llevar `tag=guiadeportiva-21`.
+- Links cortos de SiteStripe (`https://link.amazon/...`, `amzn.to/...`) valen si terminan así.
+- Un 503 de Amazon a curl es bloqueo anti-bot, no un error, si la URL final es correcta.
+- Si no llega a amazon.es o no lleva el tag: **no insertarlo** y reportarlo.
+
+## 3. Localizar el placeholder de cada producto
+
+Cada producto es una sección `## N. Nombre — Subtítulo` (en comparativas, `## Nombre en detalle`).
+El placeholder es **el más cercano después del nombre, dentro de esa misma sección** (nunca el primero del archivo).
+Variantes aceptadas:
+
+- `**[Ver precio actual y disponibilidad en Amazon →]**` (formato actual)
+- `[Ver precio actual en Amazon →]` o `**[Ver precio actual en Amazon →]**` (formato antiguo)
+- `<a href="PLACEHOLDER_AMAZON" ...>...</a>` (lo genera `article-generator`)
+- En comparativas, placeholders por modelo: `**[Ver Alphafly en Amazon →]**`.
+
+Casos:
+- **Producto no encontrado** en el artículo → no inventar sección ni link; reportar "producto no encontrado" y seguir.
+- **Ya enlazado** (la sección ya tiene `<a href="https://...amazon...` o `link.amazon`) → no tocar; reportar "ya enlazado, saltado".
+
+## 4. Reemplazar
+
+Formato del sitio (CLAUDE.md, "Reglas del sitio"): caja `.aff-cta` con el botón grande.
+
+```html
+<div class="aff-cta">
+  <a href="URL" class="btn-aff btn-aff--lg" target="_blank" rel="nofollow sponsored noopener">Ver precio actual y disponibilidad en Amazon →</a>
+</div>
+```
+
+Reglas duras:
+- `rel="nofollow sponsored noopener"` **completo, siempre** (política de Amazon Associates). Nunca omitir ninguno de los tres.
+- `target="_blank"`.
+- **Nunca** sintaxis `{:target=...}`: en MDX `{` abre una expresión JS y rompe el build.
+- Sin precios, "desde X €", ratings ni disponibilidad fija en el texto del botón ni alrededor.
+
+Después, los botones compactos (`.btn-aff--sm`) del resumen, la tabla (columna "Amazon") y el veredicto
+reutilizan el mismo link:
+
+```bash
+python3 scripts/conversion-buttons.py src/content/articles/<archivo>.mdx   # idempotente
+```
+
+Una tabla "omitida" en la salida significa que alguna fila no coincide con un producto: revisarla.
+La barra fija del móvil toma sola el pick "Mejor general". Actualizar `updatedDate` a hoy.
+
+## 5. Verificar y publicar
+
+```bash
+grep -n -B25 'btn-aff--lg' <archivo> | grep -E '^[0-9]+-## |btn-aff'      # cada link bajo su producto
+grep -nE 'Ver precio actual|PLACEHOLDER_AMAZON' <archivo> | grep -v 'href="http'   # placeholders restantes
+npm run build
+```
+
+- Si el build falla: `git checkout -- <archivo>`, reportar el error y no commitear.
+- El link no va al JSON-LD: el artículo usa `ItemList` (nombre + `#producto-N`), sin precio ni oferta.
+- Commit solo del MDX: `feat: add real affiliate links to <slug> article (<N> products)` y push a `main`.
+- Deploy: `gh api repos/Valec5/guiadeportiva-es/commits/<sha>/status --jq '.state'` hasta `success`
+  (normalmente ~60 s). Comprobación en vivo:
+  ```bash
+  curl -s https://guiadeportiva.es/<slug>/ | grep -c 'btn-aff--lg'   # = productos con link
+  ```
+  (`btn-aff` a secas cuenta también los botones compactos y la barra móvil.)
+- Actualizar "Historial" y "Pendientes" en `~/Guiadep/CLAUDE.md`.
+
+## Reporte
+
+- Links insertados (producto → URL final validada)
+- Productos no encontrados / ya enlazados / URLs rechazadas (y por qué)
+- Resultado del build
+- URL en producción: `https://guiadeportiva.es/<slug>/`

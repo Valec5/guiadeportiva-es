@@ -1,0 +1,416 @@
+{
+ "_info": "Anchors en uso: origen → destino → [anchors]. seo-optimizer lo consulta para rotar anchors y lo regenera al terminar.",
+ "updated": "2026-10-01",
+ "map": {
+  "zapatillas-running-pronador": {
+   "/zapatillas-running-dolor-rodilla/": [
+    "zapatillas para dolor de rodilla"
+   ],
+   "/zapatillas-running-mujer/": [
+    "mejores zapatillas running para mujer"
+   ],
+   "/asics-kayano-31-vs-brooks-adrenaline-gts-25/": [
+    "Kayano 31 vs Adrenaline GTS 25"
+   ],
+   "/asics-vs-brooks/": [
+    "ASICS vs Brooks"
+   ],
+   "/zapatillas-running-principiantes/": [
+    "primeras zapatillas para empezar a correr"
+   ],
+   "/como-saber-si-soy-pronador/": [
+    "cómo saber si soy pronador"
+   ]
+  },
+  "zapatillas-running-calidad-precio": {
+   "/zapatillas-running-baratas/": [
+    "zapatillas running baratas"
+   ],
+   "/zapatillas-running-principiantes/": [
+    "zapatillas para principiantes"
+   ],
+   "/zapatillas-running-pronador/": [
+    "zapatillas para pronador"
+   ],
+   "/zapatillas-running-entrenamiento-diario/": [
+    "entrenamiento diario"
+   ],
+   "/cuanto-duran-zapatillas-running/": [
+    "cuánto duran las zapatillas de running"
+   ]
+  },
+  "zapatillas-running-mujer": {
+   "/zapatillas-running-principiantes/": [
+    "zapatillas para principiantes"
+   ],
+   "/zapatillas-running-pronador/": [
+    "zapatillas para pronador"
+   ],
+   "/zapatillas-running-entrenamiento-diario/": [
+    "entrenamiento diario"
+   ],
+   "/zapatillas-running-baratas/": [
+    "mejores zapatillas running baratas"
+   ]
+  },
+  "zapatillas-running-baratas": {
+   "/zapatillas-running-principiantes/": [
+    "empezando a correr"
+   ],
+   "/mejores-zapatillas-trail-running-baratas/": [
+    "zapatillas de trail baratas"
+   ],
+   "/zapatillas-running-calidad-precio/": [
+    "gama calidad-precio"
+   ],
+   "/mejores-zapatillas-nike-running/": [
+    "mejores zapatillas Nike running"
+   ],
+   "/cuanto-duran-zapatillas-running/": [
+    "cuánto duran las zapatillas de running"
+   ]
+  },
+  "zapatillas-running-principiantes": {
+   "/zapatillas-running-baratas/": [
+    "zapatillas baratas"
+   ],
+   "/zapatillas-running-calidad-precio/": [
+    "zapatillas calidad-precio"
+   ],
+   "/zapatillas-running-entrenamiento-diario/": [
+    "zapatillas para entrenamiento diario"
+   ],
+   "/nike-pegasus-41-vs-brooks-ghost-16/": [
+    "Pegasus 41 vs Ghost 16"
+   ],
+   "/zapatillas-running-dolor-rodilla/": [
+    "dolor de rodilla"
+   ],
+   "/como-saber-si-soy-pronador/": [
+    "cómo saber si soy pronador"
+   ]
+  },
+  "zapatillas-running-dolor-rodilla": {
+   "/como-saber-si-soy-pronador/": [
+    "cómo saber si soy pronador"
+   ],
+   "/zapatillas-running-pronador/": [
+    "zapatillas para pronador"
+   ],
+   "/asics-kayano-31-vs-brooks-adrenaline-gts-25/": [
+    "Kayano 31 vs Adrenaline GTS 25"
+   ],
+   "/zapatillas-running-peso-pesado/": [
+    "corredores de peso pesado"
+   ],
+   "/mejores-zapatillas-hoka/": [
+    "mejores zapatillas Hoka"
+   ],
+   "/zapatillas-maraton/": [
+    "zapatillas para maratón"
+   ]
+  },
+  "zapatillas-maraton": {
+   "/mejores-zapatillas-nike-running/": [
+    "zapatillas Nike running"
+   ],
+   "/mejores-zapatillas-hoka/": [
+    "mejores zapatillas Hoka"
+   ],
+   "/hoka-clifton-9-vs-bondi-9/": [
+    "Clifton 9 vs Bondi 9"
+   ],
+   "/nike-alphafly-vs-adidas-adizero/": [
+    "Nike Alphafly vs Adidas Adizero"
+   ],
+   "/zapatillas-running-entrenamiento-diario/": [
+    "zapatillas para entrenamiento diario"
+   ]
+  },
+  "nike-alphafly-vs-adidas-adizero": {
+   "/zapatillas-maraton/": [
+    "zapatillas para maratón"
+   ],
+   "/zapatillas-running-entrenamiento-diario/": [
+    "entrenamiento diario"
+   ],
+   "/cuanto-duran-zapatillas-running/": [
+    "cuánto duran las zapatillas de running"
+   ],
+   "/mejores-zapatillas-nike-running/": [
+    "mejores zapatillas Nike running"
+   ]
+  },
+  "zapatillas-running-entrenamiento-diario": {
+   "/mejores-zapatillas-nike-running/": [
+    "mejores zapatillas Nike running"
+   ],
+   "/nike-pegasus-41-vs-brooks-ghost-16/": [
+    "comparativa Nike Pegasus 41 vs Brooks Ghost 16"
+   ],
+   "/zapatillas-running-calidad-precio/": [
+    "zapatillas calidad-precio"
+   ],
+   "/zapatillas-running-principiantes/": [
+    "zapatillas para principiantes"
+   ],
+   "/asics-vs-brooks/": [
+    "ASICS vs Brooks"
+   ],
+   "/cuanto-duran-zapatillas-running/": [
+    "cuánto duran las zapatillas de running"
+   ]
+  },
+  "zapatillas-running-peso-pesado": {
+   "/zapatillas-running-dolor-rodilla/": [
+    "zapatillas para dolor de rodilla"
+   ],
+   "/zapatillas-running-pronador/": [
+    "zapatillas para pronador"
+   ],
+   "/mejores-zapatillas-hoka/": [
+    "mejores zapatillas Hoka"
+   ],
+   "/hoka-clifton-9-vs-bondi-9/": [
+    "Clifton 9 vs Bondi 9"
+   ],
+   "/cuanto-duran-zapatillas-running/": [
+    "cuánto duran las zapatillas de running"
+   ],
+   "/zapatillas-running-principiantes/": [
+    "zapatillas para principiantes"
+   ]
+  },
+  "mejores-zapatillas-hoka": {
+   "/on-running-vs-hoka/": [
+    "comparativa On Running vs Hoka"
+   ],
+   "/zapatillas-running-entrenamiento-diario/": [
+    "zapatillas para entrenamiento diario"
+   ],
+   "/mejores-zapatillas-on-running/": [
+    "zapatillas On Running"
+   ],
+   "/mejores-zapatillas-trail-running-baratas/": [
+    "zapatillas de trail baratas"
+   ],
+   "/hoka-clifton-9-vs-bondi-9/": [
+    "Hoka Clifton 9 vs Bondi 9"
+   ]
+  },
+  "mejores-zapatillas-on-running": {
+   "/mejores-zapatillas-hoka/": [
+    "zapatillas Hoka"
+   ],
+   "/mejores-zapatillas-nike-running/": [
+    "mejores zapatillas Nike running"
+   ],
+   "/on-running-vs-hoka/": [
+    "comparativa On Running vs Hoka"
+   ],
+   "/zapatillas-running-principiantes/": [
+    "zapatillas para principiantes"
+   ]
+  },
+  "on-running-vs-hoka": {
+   "/mejores-zapatillas-on-running/": [
+    "mejores zapatillas On Running"
+   ],
+   "/mejores-zapatillas-hoka/": [
+    "mejores zapatillas Hoka"
+   ],
+   "/mejores-zapatillas-trail-running-baratas/": [
+    "zapatillas de trail baratas"
+   ],
+   "/asics-vs-brooks/": [
+    "ASICS vs Brooks"
+   ]
+  },
+  "mejores-zapatillas-nike-running": {
+   "/nike-pegasus-41-vs-brooks-ghost-16/": [
+    "Pegasus 41 vs Ghost 16"
+   ],
+   "/zapatillas-running-entrenamiento-diario/": [
+    "entrenamiento diario"
+   ],
+   "/zapatillas-maraton/": [
+    "zapatillas para maratón"
+   ],
+   "/zapatillas-running-pronador/": [
+    "zapatillas para pronador"
+   ],
+   "/nike-alphafly-vs-adidas-adizero/": [
+    "Nike Alphafly vs Adidas Adizero"
+   ]
+  },
+  "asics-vs-brooks": {
+   "/zapatillas-running-entrenamiento-diario/": [
+    "zapatillas para entrenamiento diario"
+   ],
+   "/zapatillas-running-pronador/": [
+    "zapatillas para pronador"
+   ],
+   "/asics-kayano-31-vs-brooks-adrenaline-gts-25/": [
+    "Kayano 31 vs Adrenaline GTS 25"
+   ],
+   "/mejores-zapatillas-hoka/": [
+    "mejores zapatillas Hoka"
+   ],
+   "/on-running-vs-hoka/": [
+    "On Running vs Hoka"
+   ]
+  },
+  "mejores-zapatillas-crossfit": {
+   "/mejores-zapatillas-padel-hombre/": [
+    "zapatillas de pádel para hombre"
+   ],
+   "/mejores-zapatillas-trail-running-baratas/": [
+    "zapatillas de trail baratas"
+   ],
+   "/zapatillas-running-entrenamiento-diario/": [
+    "entrenamiento diario"
+   ],
+   "/mejores-zapatillas-gym-hombre/": [
+    "mejores zapatillas de gym para hombre"
+   ]
+  },
+  "mejores-zapatillas-gym-hombre": {
+   "/mejores-zapatillas-spinning/": [
+    "zapatillas de spinning"
+   ],
+   "/mejores-zapatillas-padel-hombre/": [
+    "zapatillas de pádel"
+   ],
+   "/mejores-zapatillas-crossfit/": [
+    "zapatillas de crossfit"
+   ],
+   "/zapatillas-running-entrenamiento-diario/": [
+    "entrenamiento diario"
+   ]
+  },
+  "mejores-zapatillas-trail-running-baratas": {
+   "/zapatillas-running-baratas/": [
+    "zapatillas running baratas"
+   ],
+   "/mejores-zapatillas-crossfit/": [
+    "zapatillas de crossfit"
+   ],
+   "/mejores-zapatillas-hoka/": [
+    "mejores zapatillas Hoka"
+   ],
+   "/zapatillas-running-peso-pesado/": [
+    "zapatillas para peso pesado"
+   ]
+  },
+  "mejores-zapatillas-spinning": {
+   "/mejores-zapatillas-crossfit/": [
+    "zapatillas de crossfit"
+   ],
+   "/cuanto-duran-zapatillas-running/": [
+    "cuánto duran las zapatillas de running"
+   ],
+   "/mejores-zapatillas-gym-hombre/": [
+    "zapatillas de gym"
+   ],
+   "/zapatillas-running-entrenamiento-diario/": [
+    "running para entrenamiento diario"
+   ]
+  },
+  "mejores-zapatillas-padel-hombre": {
+   "/cuanto-duran-zapatillas-running/": [
+    "cuánto duran las zapatillas de running"
+   ],
+   "/mejores-zapatillas-trail-running-baratas/": [
+    "zapatillas de trail"
+   ],
+   "/mejores-zapatillas-crossfit/": [
+    "zapatillas de crossfit"
+   ],
+   "/mejores-zapatillas-gym-hombre/": [
+    "zapatillas de gym"
+   ]
+  },
+  "nike-pegasus-41-vs-brooks-ghost-16": {
+   "/zapatillas-running-entrenamiento-diario/": [
+    "zapatillas para entrenamiento diario"
+   ],
+   "/asics-vs-brooks/": [
+    "ASICS vs Brooks"
+   ],
+   "/mejores-zapatillas-nike-running/": [
+    "mejores zapatillas Nike running"
+   ],
+   "/zapatillas-running-principiantes/": [
+    "zapatillas para principiantes"
+   ],
+   "/zapatillas-running-pronador/": [
+    "zapatillas para pronador"
+   ]
+  },
+  "hoka-clifton-9-vs-bondi-9": {
+   "/mejores-zapatillas-hoka/": [
+    "mejores zapatillas Hoka"
+   ],
+   "/on-running-vs-hoka/": [
+    "comparativa On Running vs Hoka"
+   ],
+   "/zapatillas-running-peso-pesado/": [
+    "zapatillas para peso pesado"
+   ],
+   "/zapatillas-running-dolor-rodilla/": [
+    "zapatillas para dolor de rodilla"
+   ],
+   "/zapatillas-running-pronador/": [
+    "zapatillas para pronador"
+   ]
+  },
+  "asics-kayano-31-vs-brooks-adrenaline-gts-25": {
+   "/como-saber-si-soy-pronador/": [
+    "cómo saber si eres pronador"
+   ],
+   "/zapatillas-running-pronador/": [
+    "zapatillas para pronador"
+   ],
+   "/asics-vs-brooks/": [
+    "ASICS vs Brooks"
+   ],
+   "/zapatillas-running-dolor-rodilla/": [
+    "zapatillas para dolor de rodilla"
+   ]
+  },
+  "cuanto-duran-zapatillas-running": {
+   "/zapatillas-running-peso-pesado/": [
+    "zapatillas para peso pesado"
+   ],
+   "/zapatillas-running-entrenamiento-diario/": [
+    "zapatillas para entrenamiento diario"
+   ],
+   "/zapatillas-running-calidad-precio/": [
+    "zapatillas calidad-precio"
+   ],
+   "/zapatillas-running-baratas/": [
+    "zapatillas running baratas"
+   ],
+   "/mejores-zapatillas-trail-running-baratas/": [
+    "zapatillas de trail baratas"
+   ]
+  },
+  "como-saber-si-soy-pronador": {
+   "/zapatillas-running-principiantes/": [
+    "primeras zapatillas para empezar a correr"
+   ],
+   "/zapatillas-running-pronador/": [
+    "zapatillas para pronador"
+   ],
+   "/asics-vs-brooks/": [
+    "ASICS vs Brooks"
+   ],
+   "/asics-kayano-31-vs-brooks-adrenaline-gts-25/": [
+    "Kayano 31 vs Adrenaline GTS 25"
+   ],
+   "/zapatillas-running-dolor-rodilla/": [
+    "zapatillas para dolor de rodilla"
+   ]
+  }
+ }
+}
