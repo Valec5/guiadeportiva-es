@@ -114,6 +114,7 @@ featured: false
 
 ## Cierre
 
+0. Pasar `spain-language` y después `human-polish` (quita el tono de IA sin tocar datos, H2 ni schema).
 1. `npm run build` y verificar en `dist/<slug>/index.html`: FAQPage (≥4 preguntas), `ItemList` con un elemento por producto
    (cada `url` apunta a un `id` que existe en la página),
    BreadcrumbList, JSON-LD parseable y links internos existentes (ver script en la skill `seo-optimizer`).
