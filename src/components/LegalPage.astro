@@ -16,17 +16,17 @@ const { title, description, heading, showUpdated = true } = Astro.props;
     <div class="wrap">
       <nav class="crumb" aria-label="Migas de pan">
         <a href="/">Inicio</a>
-        <span class="sep">/</span>
+        <span class="sep" aria-hidden="true">/</span>
         <span class="cur">{heading}</span>
       </nav>
-      <h1 style="font-family:var(--serif);font-weight:800;font-size:clamp(30px,4.5vw,50px);letter-spacing:-0.025em;line-height:1.06;margin-top:22px;">
+      <h1 class="page-title">
         {heading}
       </h1>
     </div>
   </div>
   <div class="page-content">
     <div class="wrap">
-      <div class="prose" style="max-width:720px;">
+      <div class="prose">
         {showUpdated && <p><em>Última actualización: {LEGAL_UPDATED}</em></p>}
         <slot />
       </div>

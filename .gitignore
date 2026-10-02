@@ -6,3 +6,8 @@ node_modules/
 .DS_Store
 .astro/
 .vercel
+
+# Impeccable: el motor se descarga solo en el primer uso; los hooks son locales (npx impeccable install los regenera)
+.claude/skills/impeccable/scripts/bin/
+.claude/settings.local.json
+.impeccable/live/

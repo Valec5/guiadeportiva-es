@@ -5,15 +5,13 @@ import type { CollectionEntry } from 'astro:content';
 interface Props {
   articles: CollectionEntry<'articles'>[];
   title?: string;
-  eyebrow?: string;
 }
 
-const { articles, title = 'Últimas guías', eyebrow = 'Para ti' } = Astro.props;
+const { articles, title = 'Últimas guías' } = Astro.props;
 ---
 <section class="posts-section">
   <div class="wrap">
     <div class="sec-head">
-      <span class="eyebrow">{eyebrow}</span>
       <h2>{title}</h2>
     </div>
     <div class="posts-grid">

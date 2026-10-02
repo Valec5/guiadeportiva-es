@@ -39,12 +39,12 @@ const monthYear = new Intl.DateTimeFormat('es-ES', { month: 'short', year: 'nume
     <div class="wrap">
       <nav class="crumb" aria-label="Migas de pan">
         <a href="/">Inicio</a>
-        <span class="sep">/</span>
+        <span class="sep" aria-hidden="true">/</span>
         <span class="cur">{crumb}</span>
       </nav>
-      <div style="margin-top:24px;">
-        <span class="eyebrow">{eyebrow}</span>
+      <div>
         <h1 class="cat-title">{heading}</h1>
+        <p class="cat-count-meta">{eyebrow}</p>
         <div class="cat-intro">
           <slot />
         </div>
@@ -52,7 +52,7 @@ const monthYear = new Intl.DateTimeFormat('es-ES', { month: 'short', year: 'nume
     </div>
   </div>
 
-  <div class="wrap" style="padding-top:clamp(40px,6vw,64px);padding-bottom:clamp(56px,7vw,88px);">
+  <div class="wrap cat-archive-body">
     <nav class="subcats" aria-label="Explorar por tema">
       {groups.map(g => (
         <div class="subcat">
@@ -97,7 +97,7 @@ const monthYear = new Intl.DateTimeFormat('es-ES', { month: 'short', year: 'nume
         })}
       </div>
     ) : (
-      <p style="color:var(--ink-soft);font-size:17px;padding:40px 0;">
+      <p class="cat-empty">
         No hay guías publicadas todavía.
       </p>
     )}

@@ -5,11 +5,12 @@ export default {
     extend: {
       colors: {
         orange: '#E8500A',
+        'orange-ink': '#B5400A',
         'orange-dark': '#C7440A',
         'orange-tint': '#FBEFE7',
         ink: '#1A1714',
         'ink-soft': '#57514B',
-        'ink-faint': '#8C857E',
+        'ink-faint': '#6E675F',
         paper: '#FFFFFF',
         'paper-warm': '#FAF7F4',
         'paper-warm-2': '#F4EFE9',

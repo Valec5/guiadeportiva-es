@@ -27,17 +27,17 @@ const schema = {
     <div class="wrap">
       <nav class="crumb" aria-label="Migas de pan">
         <a href="/">Inicio</a>
-        <span class="sep">/</span>
+        <span class="sep" aria-hidden="true">/</span>
         <span class="cur">Sobre nosotros</span>
       </nav>
-      <h1 style="font-family:var(--serif);font-weight:800;font-size:clamp(30px,4.5vw,50px);letter-spacing:-0.025em;line-height:1.06;margin-top:22px;">
+      <h1 class="page-title">
         Sobre GuíaDeportiva.es
       </h1>
     </div>
   </div>
   <div class="page-content">
     <div class="wrap">
-      <div class="prose" style="max-width:720px;">
+      <div class="prose">
         <p>
           <strong>GuíaDeportiva.es</strong> nació de una pregunta simple: ¿por qué es tan difícil
           encontrar información clara y honesta sobre zapatillas deportivas en español?
@@ -70,7 +70,6 @@ const schema = {
 
         <h2>Quién está detrás</h2>
         <div class="team-card">
-          <div class="photo" aria-hidden="true">foto<br />equipo</div>
           <div>
             <div class="t-name">Equipo GuíaDeportiva</div>
             <div class="t-role">Redacción y análisis</div>
