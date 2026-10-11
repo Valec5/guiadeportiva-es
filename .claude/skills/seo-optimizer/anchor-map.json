@@ -1,10 +1,19 @@
 {
  "_info": "Anchors en uso: origen → destino → [anchors]. seo-optimizer lo consulta para rotar anchors y lo regenera al terminar.",
- "updated": "2026-10-01",
+ "updated": "2026-10-11",
  "map": {
   "zapatillas-running-pronador": {
    "/zapatillas-running-dolor-rodilla/": [
     "zapatillas para dolor de rodilla"
+   ],
+   "/mejores-zapatillas-hoka/": [
+    "mejores zapatillas Hoka"
+   ],
+   "/mejores-zapatillas-on-running/": [
+    "mejores zapatillas On Running"
+   ],
+   "/on-running-vs-hoka/": [
+    "On Running vs Hoka"
    ],
    "/zapatillas-running-mujer/": [
     "mejores zapatillas running para mujer"
@@ -14,6 +23,9 @@
    ],
    "/asics-vs-brooks/": [
     "ASICS vs Brooks"
+   ],
+   "/zapatillas-running-peso-pesado/": [
+    "zapatillas para peso pesado"
    ],
    "/zapatillas-running-principiantes/": [
     "primeras zapatillas para empezar a correr"
@@ -29,8 +41,23 @@
    "/zapatillas-running-principiantes/": [
     "zapatillas para principiantes"
    ],
+   "/mejores-zapatillas-trail-running-baratas/": [
+    "zapatillas de trail baratas"
+   ],
+   "/on-running-vs-hoka/": [
+    "On Running vs Hoka"
+   ],
+   "/nike-alphafly-vs-adidas-adizero/": [
+    "Nike Alphafly 3 y la Adidas Adizero Adios Pro Evo 1"
+   ],
    "/zapatillas-running-pronador/": [
     "zapatillas para pronador"
+   ],
+   "/como-saber-si-soy-pronador/": [
+    "cómo saber si eres pronador"
+   ],
+   "/asics-kayano-31-vs-brooks-adrenaline-gts-25/": [
+    "Kayano 31 vs Adrenaline GTS 25"
    ],
    "/zapatillas-running-entrenamiento-diario/": [
     "entrenamiento diario"
@@ -49,6 +76,9 @@
    "/zapatillas-running-entrenamiento-diario/": [
     "entrenamiento diario"
    ],
+   "/nike-pegasus-41-vs-brooks-ghost-16/": [
+    "Pegasus 41 vs Ghost 16"
+   ],
    "/zapatillas-running-baratas/": [
     "mejores zapatillas running baratas"
    ]
@@ -65,6 +95,9 @@
    ],
    "/mejores-zapatillas-nike-running/": [
     "mejores zapatillas Nike running"
+   ],
+   "/zapatillas-running-peso-pesado/": [
+    "zapatillas para peso pesado"
    ],
    "/cuanto-duran-zapatillas-running/": [
     "cuánto duran las zapatillas de running"
@@ -94,8 +127,14 @@
    "/como-saber-si-soy-pronador/": [
     "cómo saber si soy pronador"
    ],
+   "/mejores-zapatillas-padel-hombre/": [
+    "zapatillas de pádel"
+   ],
    "/zapatillas-running-pronador/": [
     "zapatillas para pronador"
+   ],
+   "/hoka-clifton-9-vs-bondi-9/": [
+    "Clifton 9 vs Bondi 9"
    ],
    "/asics-kayano-31-vs-brooks-adrenaline-gts-25/": [
     "Kayano 31 vs Adrenaline GTS 25"
@@ -105,6 +144,12 @@
    ],
    "/mejores-zapatillas-hoka/": [
     "mejores zapatillas Hoka"
+   ],
+   "/mejores-zapatillas-gym-hombre/": [
+    "zapatillas de gym"
+   ],
+   "/mejores-zapatillas-crossfit/": [
+    "zapatillas de crossfit"
    ],
    "/zapatillas-maraton/": [
     "zapatillas para maratón"
@@ -125,6 +170,12 @@
    ],
    "/zapatillas-running-entrenamiento-diario/": [
     "zapatillas para entrenamiento diario"
+   ],
+   "/mejores-zapatillas-gym-hombre/": [
+    "zapatillas de gym"
+   ],
+   "/mejores-zapatillas-spinning/": [
+    "zapatillas de spinning"
    ]
   },
   "nike-alphafly-vs-adidas-adizero": {
@@ -142,6 +193,9 @@
    ]
   },
   "zapatillas-running-entrenamiento-diario": {
+   "/mejores-zapatillas-on-running/": [
+    "zapatillas On Running"
+   ],
    "/mejores-zapatillas-nike-running/": [
     "mejores zapatillas Nike running"
    ],
@@ -156,6 +210,18 @@
    ],
    "/asics-vs-brooks/": [
     "ASICS vs Brooks"
+   ],
+   "/mejores-zapatillas-gym-hombre/": [
+    "zapatillas de gym"
+   ],
+   "/mejores-zapatillas-crossfit/": [
+    "zapatillas de crossfit"
+   ],
+   "/mejores-zapatillas-spinning/": [
+    "zapatillas de spinning"
+   ],
+   "/mejores-zapatillas-padel-hombre/": [
+    "zapatillas de pádel"
    ],
    "/cuanto-duran-zapatillas-running/": [
     "cuánto duran las zapatillas de running"

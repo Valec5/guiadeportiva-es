@@ -56,6 +56,8 @@ const groups = [
     ],
   },
 ];
+const crossArticles = await getCollection('articles', a => a.data.category === 'comparativas');
+crossArticles.sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
 ---
 <CategoryArchive
   seoTitle="Zapatillas Running 2026: Guías por Pisada, Precio y Marca"
@@ -65,6 +67,8 @@ const groups = [
   eyebrow={`${articles.length} guías`}
   groups={groups}
   articles={articles}
+  crossTitle="Comparativas cara a cara"
+  crossArticles={crossArticles}
 >
   <p>
     Elegir zapatillas de running no debería ser una lotería. En estas guías de compra comparamos

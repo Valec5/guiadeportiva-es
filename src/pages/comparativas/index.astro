@@ -51,6 +51,8 @@ const groups = [
     ],
   },
 ];
+const crossArticles = await getCollection('articles', a => a.data.category === 'running');
+crossArticles.sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
 ---
 <CategoryArchive
   seoTitle="Comparativas de Zapatillas Running 2026: Cara a Cara"
@@ -60,6 +62,8 @@ const groups = [
   eyebrow={`${articles.length} comparativas`}
   groups={groups}
   articles={articles}
+  crossTitle="Guías de compra"
+  crossArticles={crossArticles}
 >
   <p>
     Cuando la duda está entre dos opciones concretas, una comparativa directa ahorra horas de

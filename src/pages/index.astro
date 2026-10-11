@@ -10,6 +10,11 @@ const allArticles = await getCollection('articles');
 allArticles.sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
 
 const featuredArticles = allArticles.filter(a => a.data.featured);
+// Últimos análisis: los 6 actualizados más recientemente (empate: el publicado más tarde primero).
+const lastDate = (a: (typeof allArticles)[number]) => (a.data.updatedDate ?? a.data.publishDate).getTime();
+const latestArticles = [...allArticles]
+  .sort((a, b) => lastDate(b) - lastDate(a) || b.data.publishDate.getTime() - a.data.publishDate.getTime())
+  .slice(0, 6);
 const modelCount = new Set(allArticles.flatMap(a => extractProducts(a.body).map(p => p.name))).size;
 const runningCount = allArticles.filter(a => a.data.category === 'running').length;
 const comparativasCount = allArticles.filter(a => a.data.category === 'comparativas').length;
@@ -60,11 +65,18 @@ const categories = [
           <li><a href="/zapatillas-maraton/">Zapatillas para maratón</a>: opciones para tu primera maratón o para buscar marca personal.</li>
         </ul>
         <p>
-          También tienes guías por marca (Hoka, On Running, Nike) y de otros deportes como crossfit,
-          gimnasio, spinning y pádel.
+          También tienes guías por marca (<a href="/mejores-zapatillas-hoka/">Hoka</a>,
+          <a href="/mejores-zapatillas-on-running/">On Running</a> y
+          <a href="/mejores-zapatillas-nike-running/">Nike</a>) y de otros deportes:
+          <a href="/mejores-zapatillas-trail-running-baratas/">trail</a>,
+          <a href="/mejores-zapatillas-crossfit/">crossfit</a>,
+          <a href="/mejores-zapatillas-gym-hombre/">gimnasio</a>,
+          <a href="/mejores-zapatillas-spinning/">spinning</a> y
+          <a href="/mejores-zapatillas-padel-hombre/">pádel</a>.
         </p>
       </div>
     </div>
   </section>
+  <ArticleGrid articles={latestArticles} title="Últimos análisis" />
   <ArticleGrid articles={featuredArticles} title="Guías destacadas" />
 </Layout>

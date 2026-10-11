@@ -16,9 +16,12 @@ interface Props {
   eyebrow: string;
   groups: LinkGroup[];
   articles: CollectionEntry<'articles'>[];
+  /** Artículos de la otra categoría, en lista compacta con teaser, para que el hub enlace todo el sitemap. */
+  crossTitle?: string;
+  crossArticles?: CollectionEntry<'articles'>[];
 }
 
-const { seoTitle, seoDescription, crumb, heading, eyebrow, groups, articles } = Astro.props;
+const { seoTitle, seoDescription, crumb, heading, eyebrow, groups, articles, crossTitle, crossArticles = [] } = Astro.props;
 
 const breadcrumbSchema = {
   '@context': 'https://schema.org',
@@ -100,6 +103,20 @@ const monthYear = new Intl.DateTimeFormat('es-ES', { month: 'short', year: 'nume
       <p class="cat-empty">
         No hay guías publicadas todavía.
       </p>
+    )}
+
+    {crossArticles.length > 0 && (
+      <section class="cross-list" aria-labelledby="cross-title">
+        <h2 id="cross-title">{crossTitle}</h2>
+        <ul>
+          {crossArticles.map(art => (
+            <li>
+              <a href={`/${art.slug}/`}>{art.data.title}</a>
+              <p>{art.data.excerpt ?? art.data.seoDescription}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
     )}
   </div>
 </Layout>

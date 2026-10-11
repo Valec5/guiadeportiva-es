@@ -457,3 +457,12 @@ footer.site-footer .logo .es { color: var(--foot-muted); }
 }
 
 .prose > h2:first-child, .prose > :first-child { margin-top: 0; }
+
+/* ---------- HUB: lista cruzada (otra categoría) ---------- */
+.cross-list { margin-top: var(--sp-6); padding-top: var(--sp-5); border-top: 1px solid var(--line); }
+.cross-list h2 { font-family: var(--serif); font-weight: 700; font-size: clamp(24px, 3vw, 30px); letter-spacing: -0.02em; color: var(--ink); margin-bottom: var(--sp-4); }
+.cross-list ul { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--sp-3) var(--sp-5); }
+.cross-list li { padding-bottom: var(--sp-3); border-bottom: 1px solid var(--line); }
+.cross-list a { font-family: var(--serif); font-weight: 600; font-size: 17px; line-height: 1.3; color: var(--ink); display: inline-block; padding-block: 2px; }
+.cross-list a:hover { color: var(--orange-ink); }
+.cross-list p { font-size: 14.5px; line-height: 1.55; color: var(--ink-soft); margin-top: 4px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
