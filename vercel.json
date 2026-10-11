@@ -5,8 +5,18 @@
   "framework": "astro",
   "redirects": [
     {
+      "source": "/zapatillas-entrenamiento-diario",
+      "destination": "/zapatillas-running-entrenamiento-diario/",
+      "statusCode": 301
+    },
+    {
       "source": "/zapatillas-entrenamiento-diario/",
       "destination": "/zapatillas-running-entrenamiento-diario/",
+      "statusCode": 301
+    },
+    {
+      "source": "/comparativa-zapatillas-running",
+      "destination": "/nike-alphafly-vs-adidas-adizero/",
       "statusCode": 301
     },
     {
